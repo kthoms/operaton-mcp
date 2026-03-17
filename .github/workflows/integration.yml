@@ -1,0 +1,23 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  integration-tests:
+    if: github.event_name == 'push' && github.repository == github.event.repository.full_name
+    runs-on: ubuntu-latest
+    env:
+      OPERATON_BASE_URL: ${{ secrets.OPERATON_BASE_URL }}
+      OPERATON_USERNAME: ${{ secrets.OPERATON_USERNAME }}
+      OPERATON_PASSWORD: ${{ secrets.OPERATON_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:integration

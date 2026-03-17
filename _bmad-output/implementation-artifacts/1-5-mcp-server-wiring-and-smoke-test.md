@@ -1,6 +1,6 @@
 # Story 1.5: MCP Server Wiring & Smoke Test
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,31 +22,26 @@ so that I can confirm the server is working and LLMs can self-correct when they 
 
 ## Tasks / Subtasks
 
-- [ ] Complete `src/index.ts` MCP server wiring (AC: 4)
-  - [ ] Shebang: `#!/usr/bin/env node` as first line
-  - [ ] Import sequence: config → http client → generated index → MCP SDK
-  - [ ] Call `loadConfig()` → `checkConnectivity(config)` → `createOperatonClient(config)` → `new McpServer(...)` → `registerAllTools(server, client)` → `server.connect(new StdioServerTransport())`
-  - [ ] File MUST stay under 50 lines — no per-tool `server.tool()` calls
-  - [ ] `console.log()` FORBIDDEN — only `console.error()` with `[operaton-mcp]` prefix
-- [ ] Implement unknown tool handler in `src/generated/index.ts` (AC: 3)
-  - [ ] `registerAllTools` must include a fallback dispatch that returns structured error for unknown tool names
-  - [ ] Error format: `"Unknown tool: {name}. Available groups: processDefinition, task, incident, ..."`
-  - [ ] The group list should be dynamic — derived from actual registered groups, not hardcoded
-  - [ ] Returns: `{ isError: true, content: [{ type: "text", text: "Unknown tool: ..." }] }`
-- [ ] Create `test/smoke/mcp-protocol.test.ts` (AC: 1, 2, 5)
-  - [ ] Set `OPERATON_SKIP_HEALTH_CHECK=true` environment for test
-  - [ ] Mock `fetch` at the global level (undici MockAgent or `vi.stubGlobal('fetch', ...)`)
-  - [ ] Test 1: `tools/list` returns array with length ≥ 1; each tool has `name` and `description`
-  - [ ] Test 2: `tools/call` with a valid fixture tool name and mocked Operaton response → `content[0].type === "text"` and `isError` is falsy
-  - [ ] Test 3: `tools/call` with unknown tool name → `isError: true`, text contains `"Unknown tool:"`
-  - [ ] Use `child_process` to spawn the server binary OR use the MCP SDK's in-process test client
-  - [ ] Smoke test does NOT require live Operaton instance
-- [ ] Verify `registerAllTools` export from generated barrel (AC: 1)
-  - [ ] `src/generated/index.ts` exports `registerAllTools(server: McpServer, client: OperatonClient): void`
-  - [ ] Called once in `src/index.ts` — registers all tools from fixture manifest
-- [ ] Add `npm test` script (AC: 5)
-  - [ ] `"test": "vitest run"` in package.json
-  - [ ] Smoke tests run without live Operaton: no `OPERATON_BASE_URL` needed
+- [x] Complete `src/index.ts` MCP server wiring (AC: 4)
+  - [x] Shebang: `#!/usr/bin/env node` as first line
+  - [x] Import sequence: config → http client → generated index → MCP SDK
+  - [x] Full startup chain in correct order
+  - [x] File under 50 lines (13 lines)
+  - [x] No `console.log()` anywhere
+- [x] Implement unknown tool handler in `src/generated/index.ts` (AC: 3)
+  - [x] Uses `server.server.setRequestHandler(CallToolRequestSchema, ...)` for custom dispatch
+  - [x] Returns `"Unknown tool: {name}. Available groups: {dynamicGroupList}"` for unknown tools
+  - [x] Group list is dynamic from registered tools
+  - [x] Returns `{ isError: true, content: [...] }`
+- [x] Create `test/smoke/mcp-protocol.test.ts` (AC: 1, 2, 5)
+  - [x] Sets OPERATON_SKIP_HEALTH_CHECK=true
+  - [x] Mocks fetch globally
+  - [x] Test: tools/list ≥ 1 tools
+  - [x] Test: valid call returns content
+  - [x] Test: unknown tool returns isError: true with "Unknown tool:" message
+  - [x] Uses MCP SDK InMemoryTransport (in-process)
+- [x] Verify `registerAllTools` export from generated barrel (AC: 1)
+- [x] `npm test` script exists and runs vitest
 
 ## Dev Notes
 
@@ -155,6 +150,18 @@ claude-sonnet-4-6
 
 ### Debug Log References
 
+- `server.tool()` doesn't allow custom unknown-tool messages. Used `server.server.setRequestHandler(CallToolRequestSchema, ...)` directly (bypassing `_toolHandlersInitialized` flag) to implement custom dispatch with `"Unknown tool: {name}. Available groups: ..."` format.
+- `registerCapabilities` needed before setting request handlers on the underlying Server.
+
 ### Completion Notes List
 
+- Generator updated: registerAllTools uses `server.server.setRequestHandler` for custom dispatch instead of `server.tool()`.
+- Smoke test uses MCP SDK InMemoryTransport for in-process testing; all 4 smoke tests pass.
+- src/index.ts verified: 13 lines, shebang present, no console.log.
+
 ### File List
+
+- src/index.ts (verified, no changes needed)
+- src/generated/index.ts (regenerated with custom dispatch)
+- test/smoke/mcp-protocol.test.ts
+- scripts/generate.ts (updated emitTopLevelBarrel)

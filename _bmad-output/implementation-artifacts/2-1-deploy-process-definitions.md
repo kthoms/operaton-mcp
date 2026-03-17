@@ -1,6 +1,6 @@
 # Story 2.1: Deploy Process Definitions
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -115,6 +115,24 @@ claude-sonnet-4-6
 
 ### Debug Log References
 
+- Fixed generator to quote hyphenated parameter names (`tenant-id`) in Zod schema fields and use bracket notation for property access; used `validated` directly instead of `input` + string-replace hack
+
 ### Completion Notes List
 
+- `postMultipart` added to `OperatonClient` for multipart form upload
+- `src/tools/deployment.ts` implements FR-01 hand-written tool with `deploymentCreate`
+- `src/tools/index.ts` exports `getCustomTools(client)` merged into generated `registerAllTools`
+- Generator updated: `emitTopLevelBarrel` accepts `hasCustomTools`, `propKey`/`propAccess` helpers fix hyphenated param names
+- `config/tool-manifest.json` populated with 60 entries (30 exposed) across processDefinition + deployment groups
+- Integration test skips automatically when `OPERATON_BASE_URL` is unset
+
 ### File List
+
+- `config/tool-manifest.json`
+- `scripts/generate.ts`
+- `src/http/client.ts`
+- `src/http/errors.ts`
+- `src/tools/deployment.ts`
+- `src/tools/index.ts`
+- `src/generated/` (auto-generated)
+- `test/integration/processDefinition.test.ts`

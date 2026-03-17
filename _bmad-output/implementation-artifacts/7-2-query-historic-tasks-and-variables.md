@@ -1,6 +1,6 @@
 # Story 7.2: Query Historic Tasks and Variables
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

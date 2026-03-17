@@ -1,6 +1,6 @@
 # Story 8.1: Deploy and Evaluate DMN Decisions
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

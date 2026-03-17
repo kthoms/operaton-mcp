@@ -1,6 +1,6 @@
 # Story 5.3: Query and Resolve Incidents
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

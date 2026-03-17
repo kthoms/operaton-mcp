@@ -1,6 +1,6 @@
 # Story 5.2: Suspend, Resume, and Retry Jobs
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

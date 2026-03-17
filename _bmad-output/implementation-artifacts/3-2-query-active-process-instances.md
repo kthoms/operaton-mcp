@@ -1,6 +1,6 @@
 # Story 3.2: Query Active Process Instances
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

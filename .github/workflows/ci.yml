@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      OPERATON_SKIP_HEALTH_CHECK: 'true'
+      OPERATON_BASE_URL: 'http://localhost:8080/engine-rest'
+      OPERATON_USERNAME: 'demo'
+      OPERATON_PASSWORD: 'demo'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm test

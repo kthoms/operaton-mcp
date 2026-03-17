@@ -1,0 +1,1673 @@
+{
+  "getProcessDefinitions": {
+    "name": "processDefinition_list",
+    "description": "List deployed process definitions. Filter by key, name, version, category, or tenant. Returns key, id, version, and deployment info for each definition.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-02"],
+    "examples": ["List all versions of 'loan-approval' process key"]
+  },
+  "getProcessDefinitionsCount": {
+    "name": "processDefinition_count",
+    "description": "Count deployed process definitions matching filter criteria. Supports same filters as list. Use before listing to plan pagination.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinition": {
+    "name": "processDefinition_getById",
+    "description": "Retrieve a single process definition by its unique ID. Returns full metadata: key, version, deployment ID, resource name, and tenant.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-03"],
+    "examples": ["Get definition for id 'loan-approval:1:abc123'"]
+  },
+  "getProcessDefinitionByKey": {
+    "name": "processDefinition_getByKey",
+    "description": "Retrieve the latest deployed version of a process definition by its key. Returns full metadata including version, deployment ID, and start form key.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-03"],
+    "examples": ["Get latest deployed version of 'loan-approval'"]
+  },
+  "deleteProcessDefinition": {
+    "name": "processDefinition_deleteById",
+    "description": "Delete a process definition by ID. Set cascade=true to also delete running instances, history, and jobs. Fails if instances exist and cascade is false.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-04"],
+    "examples": ["Delete definition 'loan-approval:1:abc' with cascade=false"]
+  },
+  "deleteProcessDefinitionsByKey": {
+    "name": "processDefinition_deleteByKey",
+    "description": "Delete all versions of a process definition by key. Set cascade=true to remove all instances and history. Fails if active instances exist and cascade is false.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-04"],
+    "examples": ["Delete all versions of 'loan-approval' definition"]
+  },
+  "startProcessInstance": {
+    "name": "processDefinition_startById",
+    "description": "Start a new process instance from a process definition ID. Pass variables as key-value pairs. Returns process instance ID and initial state.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": ["Start instance of definition 'loan-approval:1:abc' with applicantId variable"]
+  },
+  "startProcessInstanceByKey": {
+    "name": "processDefinition_startByKey",
+    "description": "Start a new process instance from the latest version of a process key. Pass variables as key-value pairs. Returns instance ID and initial state.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": ["Start 'loan-approval' with {applicantId: 'a42', amount: 50000}"]
+  },
+  "getProcessDefinitionBpmn20Xml": {
+    "name": "processDefinition_getXmlById",
+    "description": "Retrieve the BPMN 2.0 XML source of a process definition by ID. Useful for inspecting or debugging process models.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionBpmn20XmlByKey": {
+    "name": "processDefinition_getXmlByKey",
+    "description": "Retrieve the BPMN 2.0 XML source of the latest deployed version of a process definition by key.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getActivityStatistics": {
+    "name": "processDefinition_activityStats",
+    "description": "Get activity-level statistics for a process definition: instance counts per activity, failed job counts, and incident counts. Useful for bottleneck analysis.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionStatistics": {
+    "name": "processDefinition_statistics",
+    "description": "Get process definition statistics across all deployed definitions: instance counts, failed job counts, and incident counts per definition.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateProcessDefinitionSuspensionStateByKey": {
+    "name": "processDefinition_suspendByKey",
+    "description": "Suspend or activate a process definition by key. Suspended definitions cannot be started. Set includeProcessInstances=true to also suspend all running instances.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateProcessDefinitionSuspensionStateById": {
+    "name": "processDefinition_suspendById",
+    "description": "Suspend or activate a specific version of a process definition by ID. Suspended definitions cannot start new instances.",
+    "expose": false,
+    "reason": "Redundant with processDefinition_suspendByKey for most operator use cases",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateProcessDefinitionSuspensionState": {
+    "name": "processDefinition_suspend",
+    "description": "Suspend or activate all versions of a process definition by key or ID with optional scheduled execution time.",
+    "expose": false,
+    "reason": "Use processDefinition_suspendByKey for simpler interface",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeployedStartForm": {
+    "name": "processDefinition_getStartFormById",
+    "description": "Retrieve the deployed start form for a process definition by ID. Returns the form schema for the user task start event.",
+    "expose": false,
+    "reason": "Low AI value — forms are UI artifacts",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeployedStartFormByKey": {
+    "name": "processDefinition_getStartFormByKey",
+    "description": "Retrieve the deployed start form for the latest version of a process definition by key.",
+    "expose": false,
+    "reason": "Low AI value — forms are UI artifacts",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStartForm": {
+    "name": "processDefinition_getStartFormRef",
+    "description": "Get the form key reference for the start event of a process definition by ID.",
+    "expose": false,
+    "reason": "Low AI value — returns form key only",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStartFormByKey": {
+    "name": "processDefinition_getStartFormRefByKey",
+    "description": "Get the form key reference for the start event of the latest process definition version by key.",
+    "expose": false,
+    "reason": "Low AI value — returns form key only",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStartFormVariables": {
+    "name": "processDefinition_getStartFormVarsById",
+    "description": "Retrieve process variables used to pre-populate the start form for a process definition by ID.",
+    "expose": false,
+    "reason": "Low AI value — use startProcessInstance directly",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStartFormVariablesByKey": {
+    "name": "processDefinition_getStartFormVarsByKey",
+    "description": "Retrieve process variables used to pre-populate the start form for a process definition by key.",
+    "expose": false,
+    "reason": "Low AI value — use startProcessInstance directly",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getRenderedStartForm": {
+    "name": "processDefinition_getRenderedFormById",
+    "description": "Retrieve the rendered HTML start form for a process definition by ID.",
+    "expose": false,
+    "reason": "Low AI value — HTML forms are not useful for AI agents",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getRenderedStartFormByKey": {
+    "name": "processDefinition_getRenderedFormByKey",
+    "description": "Retrieve the rendered HTML start form for a process definition by key.",
+    "expose": false,
+    "reason": "Low AI value — HTML forms are not useful for AI agents",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "submitForm": {
+    "name": "processDefinition_submitFormById",
+    "description": "Submit a start form to start a process instance. Use startProcessInstance instead for AI agent use.",
+    "expose": false,
+    "reason": "Use processDefinition_startById — form submission not needed for AI",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "submitFormByKey": {
+    "name": "processDefinition_submitFormByKey",
+    "description": "Submit a start form to start a process instance by key.",
+    "expose": false,
+    "reason": "Use processDefinition_startByKey — form submission not needed for AI",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionDiagram": {
+    "name": "processDefinition_getDiagramById",
+    "description": "Retrieve the process diagram image for a process definition by ID.",
+    "expose": false,
+    "reason": "Binary image data not useful for AI text agents",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionDiagramByKey": {
+    "name": "processDefinition_getDiagramByKey",
+    "description": "Retrieve the process diagram image for the latest version of a process definition by key.",
+    "expose": false,
+    "reason": "Binary image data not useful for AI text agents",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByProcessDefinitionId": {
+    "name": "processDefinition_setHistoryTtlById",
+    "description": "Update the history time-to-live (in days) for a specific process definition version by ID. Controls how long historic instances are retained.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByProcessDefinitionKey": {
+    "name": "processDefinition_setHistoryTtlByKey",
+    "description": "Update the history time-to-live (in days) for all versions of a process definition by key. Controls historic data retention.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "restartProcessInstance": {
+    "name": "processDefinition_restartInstances",
+    "description": "Restart one or more process instances for a process definition. Use to re-execute failed or completed instances from a given activity.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStaticCalledProcessDefinitions": {
+    "name": "processDefinition_getCalledProcesses",
+    "description": "List all process definitions statically called (via call activity) by a given process definition ID. Useful for dependency analysis.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeployments": {
+    "name": "deployment_list",
+    "description": "List deployments in the engine. Filter by name, source, deployment time range, or tenant. Returns deployment ID, name, and time for each deployment.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": ["List all deployments from the last 7 days"]
+  },
+  "getDeploymentsCount": {
+    "name": "deployment_count",
+    "description": "Count deployments matching filter criteria. Supports same filters as deployment list.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteDeployment": {
+    "name": "deployment_delete",
+    "description": "Delete a deployment by ID. Set cascade=true to also delete running instances and history. Use skipCustomListeners and skipIoMappings to bypass lifecycle hooks.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": ["Delete deployment 'abc123' with cascade=true"]
+  },
+  "getDeployment": {
+    "name": "deployment_getById",
+    "description": "Retrieve a deployment by its ID. Returns deployment name, source, time, and tenant ID.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeploymentResources": {
+    "name": "deployment_listResources",
+    "description": "List all resources (BPMN files, DMN files, forms) included in a deployment by deployment ID.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeploymentResource": {
+    "name": "deployment_getResource",
+    "description": "Retrieve metadata for a specific resource within a deployment by deployment ID and resource ID.",
+    "expose": false,
+    "reason": "Use deployment_listResources for resource discovery",
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeploymentResourceData": {
+    "name": "deployment_getResourceData",
+    "description": "Download the binary content of a deployment resource (e.g. BPMN XML).",
+    "expose": false,
+    "reason": "Binary content not suitable for AI text agents; use processDefinition_getXmlByKey instead",
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "redeploy": {
+    "name": "deployment_redeploy",
+    "description": "Redeploy an existing deployment, optionally selecting specific resources. Creates a new deployment from resources of a previous deployment.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getRegisteredDeployments": {
+    "name": "deployment_listRegistered",
+    "description": "List deployments registered with the process engine cluster. Used for cluster management in distributed deployments.",
+    "expose": false,
+    "reason": "Cluster management operation with limited AI operator value",
+    "tags": ["deployment"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteProcessDefinitionsByKeyAndTenantId": {
+    "name": "processDefinition_deleteByKeyAndTenant",
+    "description": "Delete all versions of a process definition by key and tenant ID in a multi-tenant setup.",
+    "expose": false,
+    "reason": "Use processDefinition_deleteByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getLatestProcessDefinitionByTenantId": {
+    "name": "processDefinition_getByKeyAndTenant",
+    "description": "Retrieve the latest process definition version by key and tenant ID.",
+    "expose": false,
+    "reason": "Use processDefinition_getByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "startProcessInstanceByKeyAndTenantId": {
+    "name": "processDefinition_startByKeyAndTenant",
+    "description": "Start a process instance from the latest version of a process definition for a specific key and tenant.",
+    "expose": false,
+    "reason": "Use processDefinition_startByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByProcessDefinitionKeyAndTenantId": {
+    "name": "processDefinition_setHistoryTtlByKeyAndTenant",
+    "description": "Update history time-to-live for a process definition by key and tenant.",
+    "expose": false,
+    "reason": "Use processDefinition_setHistoryTtlByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionBpmn20XmlByKeyAndTenantId": {
+    "name": "processDefinition_getXmlByKeyAndTenant",
+    "description": "Retrieve BPMN XML for a process definition by key and tenant.",
+    "expose": false,
+    "reason": "Use processDefinition_getXmlByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDeployedStartFormByKeyAndTenantId": {
+    "name": "processDefinition_getStartFormByKeyAndTenant",
+    "description": "Retrieve the start form for a process definition by key and tenant.",
+    "expose": false,
+    "reason": "Low AI value",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessDefinitionDiagramByKeyAndTenantId": {
+    "name": "processDefinition_getDiagramByKeyAndTenant",
+    "description": "Retrieve the process diagram for a definition by key and tenant.",
+    "expose": false,
+    "reason": "Binary image data not useful for AI text agents",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getStartFormVariablesByKeyAndTenantId": {
+    "name": "processDefinition_getStartFormVarsByKeyAndTenant",
+    "description": "Retrieve start form variables for a process definition by key and tenant.",
+    "expose": false,
+    "reason": "Low AI value",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getRenderedStartFormByKeyAndTenantId": {
+    "name": "processDefinition_getRenderedFormByKeyAndTenant",
+    "description": "Retrieve the rendered HTML start form by key and tenant.",
+    "expose": false,
+    "reason": "Low AI value",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "submitFormByKey": {
+    "name": "processDefinition_submitFormByKey2",
+    "description": "Submit start form by key.",
+    "expose": false,
+    "reason": "Use processDefinition_startByKey",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateProcessDefinitionSuspensionStateByKeyAndTenantId": {
+    "name": "processDefinition_suspendByKeyAndTenant",
+    "description": "Suspend or activate a process definition by key and tenant ID.",
+    "expose": false,
+    "reason": "Use processDefinition_suspendByKey with tenantId parameter",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getActivityStatisticsByProcessDefinitionKey": {
+    "name": "processDefinition_activityStatsByKey",
+    "description": "Get activity-level statistics for a process definition by key: instance counts per activity, failed job counts, and incident counts.",
+    "expose": false,
+    "reason": "Use processDefinition_activityStats (by ID) for specific version analysis",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getActivityStatisticsByProcessDefinitionKeyAndTenantId": {
+    "name": "processDefinition_activityStatsByKeyAndTenant",
+    "description": "Get activity statistics by key and tenant.",
+    "expose": false,
+    "reason": "Use processDefinition_activityStats",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "restartProcessInstanceAsyncOperation": {
+    "name": "processDefinition_restartInstancesAsync",
+    "description": "Restart process instances asynchronously (returns a batch job). Use when restarting many instances to avoid timeout.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "submitFormByKeyAndTenantId": {
+    "name": "processDefinition_submitFormByKeyAndTenant",
+    "description": "Submit start form by key and tenant.",
+    "expose": false,
+    "reason": "Use processDefinition_startByKey",
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "claim": {
+    "name": "task_claim",
+    "description": "Claim a user task for the specified user. After claiming, the task is assigned to that user and removed from candidate group queues.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-12"],
+    "examples": ["Claim task 'abc123' for user 'john.doe'"]
+  },
+  "unclaim": {
+    "name": "task_unclaim",
+    "description": "Unclaim a user task, removing the current assignee. The task returns to the candidate group queue and can be claimed by another user.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-13"],
+    "examples": ["Unclaim task 'abc123' so another user can pick it up"]
+  },
+  "complete": {
+    "name": "task_complete",
+    "description": "Complete a user task, advancing the process to the next step. Optionally provide output variables to pass to the process. Returns confirmation.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-14"],
+    "examples": ["Complete task 'abc123' with approved=true variable"]
+  },
+  "delegateTask": {
+    "name": "task_delegate",
+    "description": "Delegate a user task to another user. The original owner retains ownership but the delegated user can complete it. Use for escalation workflows.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-15"],
+    "examples": ["Delegate task 'abc123' to user 'manager'"]
+  },
+  "setAssignee": {
+    "name": "task_setAssignee",
+    "description": "Directly assign a user task to a specific user without going through the claim workflow. Overwrites any existing assignee.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-12"],
+    "examples": []
+  },
+  "createTask": {
+    "name": "task_create",
+    "description": "Create a standalone user task not attached to a process instance. Useful for ad-hoc work items. Provide name, assignee, priority, and due date.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-16"],
+    "examples": []
+  },
+  "updateTask": {
+    "name": "task_update",
+    "description": "Update metadata of a user task: name, description, assignee, due date, priority, or parent task. Does not advance the task in the workflow.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-16"],
+    "examples": []
+  },
+  "deleteTask": {
+    "name": "task_delete",
+    "description": "Delete a standalone user task (not part of an active process). Only applicable to manually created tasks. Process-owned tasks must be handled via process management.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getTaskVariables": {
+    "name": "task_getVariables",
+    "description": "Retrieve all variables associated with a user task. Returns variables from task scope and parent process scope.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-16"],
+    "examples": []
+  },
+  "modifyTaskVariables": {
+    "name": "task_setVariables",
+    "description": "Add or update multiple variables on a user task. Variables set here are available in the process after task completion. Provide typed variable values.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-16"],
+    "examples": ["Set 'decision=approve' and 'comment=LGTM' on task 'abc123'"]
+  },
+  "getTaskVariable": {
+    "name": "task_getVariable",
+    "description": "Retrieve a single named variable from a user task scope.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "putTaskVariable": {
+    "name": "task_setVariable",
+    "description": "Set a single named variable on a user task.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteTaskVariable": {
+    "name": "task_deleteVariable",
+    "description": "Delete a named variable from a user task scope.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getTaskLocalVariables": {
+    "name": "task_getLocalVariables",
+    "description": "Retrieve task-local variables (only visible within task scope, not propagated to process).",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "modifyTaskLocalVariables": {
+    "name": "task_setLocalVariables",
+    "description": "Add or update task-local variables scoped only to this task. Not propagated to the process after completion.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "resolve": {
+    "name": "task_resolve",
+    "description": "Resolve a delegated task, returning ownership to the original owner. Use after the delegate has completed their work to restore normal ownership.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "handleBpmnError": {
+    "name": "task_throwBpmnError",
+    "description": "Throw a BPMN error from a user task, triggering the boundary error event on the process. Use to signal an exceptional condition during task execution.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "handleEscalation": {
+    "name": "task_throwEscalation",
+    "description": "Throw a BPMN escalation from a user task, triggering the boundary escalation event. Use to escalate a task to a higher authority in the process.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryTasks": {
+    "name": "task_query",
+    "description": "Query user tasks using POST body for complex filter criteria. Equivalent to list but supports larger filter sets and variable value filtering.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryTasksCount": {
+    "name": "task_queryCount",
+    "description": "Count user tasks matching POST body filter criteria.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getIdentityLinks": {
+    "name": "task_getIdentityLinks",
+    "description": "Retrieve candidate users and groups associated with a user task. Returns all identity link associations.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "addIdentityLink": {
+    "name": "task_addIdentityLink",
+    "description": "Add a candidate user or group to a user task's identity links.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteIdentityLink": {
+    "name": "task_deleteIdentityLink",
+    "description": "Remove a candidate user or group from a user task's identity links.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getTaskCountByCandidateGroup": {
+    "name": "task_countByCandidateGroup",
+    "description": "Report task counts grouped by candidate group. Use to see workload distribution across teams.",
+    "expose": false,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getTasks": {
+    "name": "task_list",
+    "description": "Query user tasks with rich filtering: by assignee, candidate group, process instance, variables, due date, and more. Returns task metadata for operator review.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-11"],
+    "examples": ["Find all unassigned tasks in the 'loan-review' process"]
+  },
+  "getTask": {
+    "name": "task_getById",
+    "description": "Retrieve a single user task by its ID. Returns task name, assignee, due date, priority, and process instance.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getTasksCount": {
+    "name": "task_count",
+    "description": "Count user tasks matching filter criteria. Supports same filters as task list. Useful for workload sizing.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getIncidents": {
+    "name": "incident_list",
+    "description": "List active incidents in the engine. Filter by type, message, process definition, or activity. Incidents indicate failed jobs, failed scripts, or custom conditions.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": ["FR-22"],
+    "examples": ["List all failedJob incidents for process key 'loan-approval'"]
+  },
+  "getIncident": {
+    "name": "incident_getById",
+    "description": "Retrieve a single incident by ID. Returns type, message, cause, root cause, process definition ID, and activity ID.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getIncidentsCount": {
+    "name": "incident_count",
+    "description": "Count active incidents matching filter criteria. Use to gauge operational health before investigating individual incidents.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": []
+  },
+  "resolveIncident": {
+    "name": "incident_resolve",
+    "description": "Resolve an incident by ID, clearing the error state and allowing the process to continue or be retried. Only applicable to custom incident types.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": ["FR-23"],
+    "examples": ["Resolve incident 'abc123' after fixing the underlying issue"]
+  },
+  "setIncidentAnnotation": {
+    "name": "incident_setAnnotation",
+    "description": "Add or update a human-readable annotation on an incident. Use to document the investigation status or root cause for team visibility.",
+    "expose": false,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": []
+  },
+  "clearIncidentAnnotation": {
+    "name": "incident_clearAnnotation",
+    "description": "Remove the annotation from an incident.",
+    "expose": false,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "getJobs": {
+    "name": "job_list",
+    "description": "List jobs with optional filters: process instance, job definition, exception presence, retries, and due date range. Returns id, type, retries, dueDate, and exceptionMessage.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": ["FR-17"],
+    "examples": ["List all failed jobs (noRetriesLeft=true)", "List jobs for process instance 'abc123'"]
+  },
+  "getJobsCount": {
+    "name": "job_count",
+    "description": "Count jobs matching filter criteria. Use to assess backlog size before listing.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getJob": {
+    "name": "job_get",
+    "description": "Retrieve a single job by ID. Returns id, type, retries, dueDate, exceptionMessage, and process instance details.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": ["FR-17"],
+    "examples": []
+  },
+  "executeJob": {
+    "name": "job_triggerExecution",
+    "description": "Trigger immediate execution of a specific job. Use to manually run a scheduled or async job without waiting for its due date.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": ["FR-18"],
+    "examples": ["Force execute timer job 'abc123' to test its implementation"]
+  },
+  "updateJobSuspensionState": {
+    "name": "job_setSuspension",
+    "description": "Suspend or resume a specific job by ID. Suspended jobs will not be executed by the job executor. Resume to re-enable execution.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": ["FR-19", "FR-20"],
+    "examples": ["Suspend job 'abc123' during maintenance window"]
+  },
+  "setJobRetries": {
+    "name": "job_setRetries",
+    "description": "Set the retry count for a failed job. Use to reset retries after fixing the root cause of a job failure. Set to 1 or more to re-enable execution.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": ["FR-21"],
+    "examples": ["Reset retries to 3 for failed job 'abc123' after fixing the service"]
+  },
+  "getStacktrace": {
+    "name": "job_getStacktrace",
+    "description": "Retrieve the exception stacktrace for a failed job. Use to diagnose the root cause of job failures.",
+    "expose": true,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setJobDuedate": {
+    "name": "job_setDueDate",
+    "description": "Update the due date of a job. Use to reschedule a timer or delay job execution to a specific time.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "recalculateDuedate": {
+    "name": "job_recalculateDueDate",
+    "description": "Recalculate and reset the due date of a timer job based on its timer definition.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setJobPriority": {
+    "name": "job_setPriority",
+    "description": "Set the execution priority of a job. Higher priority jobs are executed first by the job executor.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteJob": {
+    "name": "job_delete",
+    "description": "Delete a job by ID. Use with caution: deleting a job prevents its associated process from advancing or completing.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryJobs": {
+    "name": "job_query",
+    "description": "Query jobs using POST body filter for complex criteria. Equivalent to list but supports larger filter payloads.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryJobsCount": {
+    "name": "job_queryCount",
+    "description": "Count jobs using POST body filter.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateSuspensionStateBy": {
+    "name": "job_setSuspensionBatch",
+    "description": "Suspend or resume multiple jobs matching a process definition or job definition filter.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setJobRetriesAsyncOperation": {
+    "name": "job_setRetriesBatch",
+    "description": "Set retry counts on multiple jobs asynchronously using a batch operation.",
+    "expose": false,
+    "tags": ["job"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "getJobDefinitions": {
+    "name": "jobDefinition_list",
+    "description": "List job definitions with filters. Returns timer and async service task definitions with their current suspension state and override priority.",
+    "expose": true,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getJobDefinitionsCount": {
+    "name": "jobDefinition_count",
+    "description": "Count job definitions matching filter criteria.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getJobDefinition": {
+    "name": "jobDefinition_get",
+    "description": "Retrieve a single job definition by ID. Returns activity details, process definition, and suspension state.",
+    "expose": true,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateSuspensionStateJobDefinition": {
+    "name": "jobDefinition_setSuspension",
+    "description": "Suspend or resume all jobs for a job definition. Use includeJobs=true to also suspend/resume active job instances for this definition.",
+    "expose": true,
+    "tags": ["jobDefinition"],
+    "frMapping": ["FR-19", "FR-20"],
+    "examples": ["Suspend all jobs of timer definition 'abc123' during deployment"]
+  },
+  "setJobRetriesJobDefinition": {
+    "name": "jobDefinition_setRetries",
+    "description": "Override the retry count for all future jobs of a job definition. Does not affect currently active jobs.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setJobPriorityJobDefinition": {
+    "name": "jobDefinition_setPriority",
+    "description": "Set execution priority override for all jobs of a job definition.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryJobDefinitions": {
+    "name": "jobDefinition_query",
+    "description": "Query job definitions using POST body filter.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryJobDefinitionsCount": {
+    "name": "jobDefinition_queryCount",
+    "description": "Count job definitions using POST body filter.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateSuspensionStateJobDefinitions": {
+    "name": "jobDefinition_setSuspensionBatch",
+    "description": "Suspend or resume all job definitions matching a process definition filter.",
+    "expose": false,
+    "tags": ["jobDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "createUser": {
+    "name": "user_create",
+    "description": "Create a new Operaton user account with profile (id, firstName, lastName, email) and credentials (password). Returns confirmation on success.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-24"],
+    "examples": ["Create user 'john.doe' with name and email"]
+  },
+  "getUsers": {
+    "name": "user_list",
+    "description": "Query Operaton users by id, firstName, lastName, email, or group membership. Returns profile info for each matching account.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-27"],
+    "examples": ["List all users in group 'approvers'"]
+  },
+  "getUserCount": {
+    "name": "user_count",
+    "description": "Count Operaton users matching filter criteria. Supports the same filters as user_list.",
+    "expose": false,
+    "tags": ["user"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getUserProfile": {
+    "name": "user_getProfile",
+    "description": "Retrieve the profile of a specific Operaton user by ID. Returns firstName, lastName, and email.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-27"],
+    "examples": []
+  },
+  "updateProfile": {
+    "name": "user_updateProfile",
+    "description": "Update the profile of an existing Operaton user: firstName, lastName, or email. Returns confirmation on success.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-25"],
+    "examples": []
+  },
+  "updateCredentials": {
+    "name": "user_updatePassword",
+    "description": "Update the password for an existing Operaton user. Requires the current password for non-admin users. Returns confirmation on success.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-25"],
+    "examples": []
+  },
+  "deleteUser": {
+    "name": "user_delete",
+    "description": "Delete an Operaton user account by ID. Returns confirmation on success. Returns a not-found error if the user does not exist.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": ["FR-26"],
+    "examples": []
+  },
+  "unlockUser": {
+    "name": "user_unlock",
+    "description": "Unlock a locked Operaton user account. Use when a user has been locked due to failed login attempts.",
+    "expose": true,
+    "tags": ["user"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "createGroup": {
+    "name": "group_create",
+    "description": "Create a new Operaton group with an id, name, and optional type. Groups are used to manage candidate task assignments and authorization.",
+    "expose": true,
+    "tags": ["group"],
+    "frMapping": ["FR-28"],
+    "examples": ["Create group 'approvers' of type 'WORKFLOW'"]
+  },
+  "getQueryGroups": {
+    "name": "group_list",
+    "description": "Query Operaton groups by id, name, type, or member user ID. Returns group details for each matching group.",
+    "expose": true,
+    "tags": ["group"],
+    "frMapping": ["FR-28"],
+    "examples": ["List all groups where user 'john.doe' is a member"]
+  },
+  "getGroupCount": {
+    "name": "group_count",
+    "description": "Count groups matching filter criteria.",
+    "expose": false,
+    "tags": ["group"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getGroup": {
+    "name": "group_get",
+    "description": "Retrieve details of a specific group by ID.",
+    "expose": false,
+    "tags": ["group"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateGroup": {
+    "name": "group_update",
+    "description": "Update the name or type of an existing group.",
+    "expose": false,
+    "tags": ["group"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteGroup": {
+    "name": "group_delete",
+    "description": "Delete an Operaton group by ID. Returns confirmation on success. Returns a not-found error if the group does not exist.",
+    "expose": true,
+    "tags": ["group"],
+    "frMapping": ["FR-28"],
+    "examples": []
+  },
+  "createGroupMember": {
+    "name": "group_addMember",
+    "description": "Add a user to an Operaton group by user ID and group ID. The user will receive task assignments for this group's candidate tasks.",
+    "expose": true,
+    "tags": ["group"],
+    "frMapping": ["FR-29"],
+    "examples": ["Add user 'john.doe' to group 'approvers'"]
+  },
+  "deleteGroupMember": {
+    "name": "group_removeMember",
+    "description": "Remove a user from an Operaton group. The user will no longer receive task assignments for this group's candidate tasks.",
+    "expose": true,
+    "tags": ["group"],
+    "frMapping": ["FR-29"],
+    "examples": []
+  },
+  "postQueryGroups": {
+    "name": "group_query",
+    "description": "Query groups using POST body filter for complex criteria.",
+    "expose": false,
+    "tags": ["group"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryGroupCount": {
+    "name": "group_queryCount",
+    "description": "Count groups using POST body filter.",
+    "expose": false,
+    "tags": ["group"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "getHistoricProcessInstances": {
+    "name": "history_listProcessInstances",
+    "description": "Query historic process instances by key, business key, state (active/completed), or date range. Returns id, definitionKey, startTime, endTime, duration, and state.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": ["FR-30"],
+    "examples": ["List all completed 'loan-approval' instances in the last 30 days"]
+  },
+  "getHistoricProcessInstancesCount": {
+    "name": "history_countProcessInstances",
+    "description": "Count historic process instances matching filter criteria. Use before listing to plan pagination.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricActivityInstances": {
+    "name": "history_listActivityInstances",
+    "description": "Query historic activity instances for a process instance. Returns activityId, name, type, startTime, endTime, duration, and assignee for user tasks.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": ["FR-31"],
+    "examples": ["Show all activities executed for process instance 'abc123'"]
+  },
+  "getHistoricActivityInstancesCount": {
+    "name": "history_countActivityInstances",
+    "description": "Count historic activity instances matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricActivityInstance": {
+    "name": "history_getActivityInstance",
+    "description": "Retrieve a single historic activity instance by ID. Returns full execution details including start/end times and duration.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricTaskInstances": {
+    "name": "history_listTaskInstances",
+    "description": "Query historic task instances by process instance, definition key, assignee, or completion state. Returns name, assignee, endTime, duration, and process instance ID.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": ["FR-32"],
+    "examples": ["List all completed tasks for process instance 'abc123'"]
+  },
+  "getHistoricTaskInstancesCount": {
+    "name": "history_countTaskInstances",
+    "description": "Count historic task instances matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricVariableInstances": {
+    "name": "history_listVariableInstances",
+    "description": "Query historic variable instances by process instance ID or variable name. Returns variable name, type, value, and the activity instance that set it.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": ["FR-33"],
+    "examples": ["List all variables set during process instance 'abc123'"]
+  },
+  "getHistoricVariableInstancesCount": {
+    "name": "history_countVariableInstances",
+    "description": "Count historic variable instances matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricVariableInstance": {
+    "name": "history_getVariableInstance",
+    "description": "Retrieve a single historic variable instance by ID.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricIncidents": {
+    "name": "history_listIncidents",
+    "description": "Query historic incidents including resolved ones. Filter by process instance, type, or resolution state. Use for post-incident analysis.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricIncidentsCount": {
+    "name": "history_countIncidents",
+    "description": "Count historic incidents matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricJobLogs": {
+    "name": "history_listJobLogs",
+    "description": "Query historic job execution logs for a process instance. Returns log entries with timestamp, job type, retries, and exception details.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricJobLogsCount": {
+    "name": "history_countJobLogs",
+    "description": "Count historic job log entries matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryUserOperationEntries": {
+    "name": "history_listUserOperations",
+    "description": "Query the user operation audit log. Returns who performed what operation (claim, complete, delete) on which entity and when.",
+    "expose": true,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": ["Show all operations performed by user 'admin' today"]
+  },
+  "queryUserOperationCount": {
+    "name": "history_countUserOperations",
+    "description": "Count user operation audit log entries matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricDetails": {
+    "name": "history_listDetails",
+    "description": "Query historic detail records (variable updates, form properties) for process and activity instances.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getHistoricDetailsCount": {
+    "name": "history_countDetails",
+    "description": "Count historic detail records matching filter criteria.",
+    "expose": false,
+    "tags": ["history"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "getDecisionDefinitions": {
+    "name": "decision_list",
+    "description": "List deployed DMN decision definitions. Filter by key, name, version, or tenant. Returns decision key, id, version, and deployment info.",
+    "expose": true,
+    "tags": ["decision"],
+    "frMapping": ["FR-34"],
+    "examples": ["List all versions of 'eligibility-check' decision"]
+  },
+  "getDecisionDefinitionsCount": {
+    "name": "decision_count",
+    "description": "Count deployed decision definitions matching filter criteria.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionByKey": {
+    "name": "decision_getByKey",
+    "description": "Retrieve the latest deployed version of a decision definition by its key. Returns key, id, version, and deployment details.",
+    "expose": true,
+    "tags": ["decision"],
+    "frMapping": ["FR-34"],
+    "examples": []
+  },
+  "getDecisionDefinitionById": {
+    "name": "decision_getById",
+    "description": "Retrieve a specific decision definition by its unique ID.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionDmnXmlByKey": {
+    "name": "decision_getXmlByKey",
+    "description": "Retrieve the DMN XML of the latest version of a decision definition by key. Use to inspect the current decision table logic.",
+    "expose": true,
+    "tags": ["decision"],
+    "frMapping": ["FR-34"],
+    "examples": []
+  },
+  "getDecisionDefinitionDmnXmlById": {
+    "name": "decision_getXmlById",
+    "description": "Retrieve the DMN XML for a specific decision definition by ID.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "evaluateDecisionByKey": {
+    "name": "decision_evaluate",
+    "description": "Evaluate a deployed DMN decision table by key with typed input variables. Returns the matched rule outputs. Used to test decision logic through AI.",
+    "expose": true,
+    "tags": ["decision"],
+    "frMapping": ["FR-35"],
+    "examples": ["Evaluate 'eligibility-check' with age=25 input variable"]
+  },
+  "evaluateDecisionById": {
+    "name": "decision_evaluateById",
+    "description": "Evaluate a specific version of a decision definition by ID with typed input variables.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionByKeyAndTenantId": {
+    "name": "decision_getByKeyAndTenant",
+    "description": "Retrieve the latest decision definition version by key for a specific tenant.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionDiagramByKey": {
+    "name": "decision_getDiagramByKey",
+    "description": "Retrieve the diagram image for a decision definition by key.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionDiagram": {
+    "name": "decision_getDiagramById",
+    "description": "Retrieve the diagram image for a decision definition by ID.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByDecisionDefinitionKey": {
+    "name": "decision_setHistoryTTL",
+    "description": "Update the history cleanup time-to-live (TTL) for a decision definition by key.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByDecisionDefinitionId": {
+    "name": "decision_setHistoryTTLById",
+    "description": "Update the history cleanup TTL for a decision definition by ID.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "evaluateDecisionByKeyAndTenant": {
+    "name": "decision_evaluateByKeyAndTenant",
+    "description": "Evaluate a decision definition by key for a specific tenant.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionDiagramByKeyAndTenant": {
+    "name": "decision_getDiagramByKeyAndTenant",
+    "description": "Retrieve the diagram image for a decision definition by key and tenant.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionDefinitionDmnXmlByKeyAndTenant": {
+    "name": "decision_getXmlByKeyAndTenant",
+    "description": "Retrieve the DMN XML for a decision definition by key and tenant.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateHistoryTimeToLiveByDecisionDefinitionKeyAndTenant": {
+    "name": "decision_setHistoryTTLByKeyAndTenant",
+    "description": "Update the history cleanup TTL for a decision definition by key and tenant.",
+    "expose": false,
+    "tags": ["decision"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "getDecisionRequirementsDefinitions": {
+    "name": "decisionRequirements_list",
+    "description": "List deployed Decision Requirements Definitions (DRDs). DRDs describe dependencies between decision tables in a complex DMN model.",
+    "expose": true,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionsCount": {
+    "name": "decisionRequirements_count",
+    "description": "Count decision requirements definitions matching filter criteria.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionByKey": {
+    "name": "decisionRequirements_getByKey",
+    "description": "Retrieve a Decision Requirements Definition (DRD) by its key.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionById": {
+    "name": "decisionRequirements_getById",
+    "description": "Retrieve a Decision Requirements Definition (DRD) by its ID.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDmnXmlByKey": {
+    "name": "decisionRequirements_getXmlByKey",
+    "description": "Retrieve the DMN XML for a Decision Requirements Definition by key.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDmnXmlById": {
+    "name": "decisionRequirements_getXmlById",
+    "description": "Retrieve the DMN XML for a Decision Requirements Definition by ID.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDiagramByKey": {
+    "name": "decisionRequirements_getDiagramByKey",
+    "description": "Retrieve the diagram image for a Decision Requirements Definition by key.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDiagramById": {
+    "name": "decisionRequirements_getDiagramById",
+    "description": "Retrieve the diagram image for a Decision Requirements Definition by ID.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionByKeyAndTenantId": {
+    "name": "decisionRequirements_getByKeyAndTenant",
+    "description": "Retrieve a Decision Requirements Definition by key and tenant.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDiagramByKeyAndTenantId": {
+    "name": "decisionRequirements_getDiagramByKeyAndTenant",
+    "description": "Retrieve the diagram for a Decision Requirements Definition by key and tenant.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getDecisionRequirementsDefinitionDmnXmlByKeyAndTenantId": {
+    "name": "decisionRequirements_getXmlByKeyAndTenant",
+    "description": "Retrieve the DMN XML for a Decision Requirements Definition by key and tenant.",
+    "expose": false,
+    "tags": ["decisionRequirements"],
+    "frMapping": [],
+    "examples": []
+  },
+
+  "startProcessInstanceByKey": {
+    "name": "processInstance_start",
+    "description": "Start a new process instance by definition key (latest version). Accepts optional business key and typed variables. Returns instance ID, state, and definition info.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-05"],
+    "examples": ["Start 'loan-approval' with businessKey 'loan-001' and amount variable"]
+  },
+  "startProcessInstance": {
+    "name": "processInstance_startById",
+    "description": "Start a new process instance by process definition ID. Use when a specific definition version is required. Returns instance ID, state, and definition info.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-05"],
+    "examples": []
+  },
+  "getProcessInstances": {
+    "name": "processInstance_list",
+    "description": "List active process instances with optional filters: business key, definition key/id, state, variable values, and tenant. Returns id, definitionKey, state, and business key.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-06"],
+    "examples": ["List all active instances of 'loan-approval' key"]
+  },
+  "getProcessInstancesCount": {
+    "name": "processInstance_count",
+    "description": "Count active process instances matching filter criteria. Supports same filters as list. Use before listing to plan pagination.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessInstance": {
+    "name": "processInstance_get",
+    "description": "Retrieve a single active process instance by ID. Returns id, definitionKey, businessKey, state, startTime, and tenant.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-06"],
+    "examples": []
+  },
+  "deleteProcessInstance": {
+    "name": "processInstance_delete",
+    "description": "Delete (cancel) an active process instance by ID. Accepts an optional deletion reason that is recorded in history. Returns confirmation on success.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-09"],
+    "examples": ["Cancel instance 'abc123' with reason 'Duplicate submission'"]
+  },
+  "updateSuspensionStateById": {
+    "name": "processInstance_setSuspension",
+    "description": "Suspend or resume a process instance by ID. Set suspended=true to pause execution, suspended=false to resume. Suspended instances cannot advance until resumed.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-07", "FR-08"],
+    "examples": ["Suspend instance 'abc123' to pause execution"]
+  },
+  "getProcessInstanceVariables": {
+    "name": "processInstance_getVariables",
+    "description": "Retrieve all variables for an active process instance. Returns each variable with its name, type, and value. Use to inspect current execution state.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-10"],
+    "examples": ["Get all variables for instance 'abc123'"]
+  },
+  "modifyProcessInstanceVariables": {
+    "name": "processInstance_setVariables",
+    "description": "Add or update multiple variables on an active process instance in a single call. Provide a map of variable names to typed values. Existing variables are overwritten.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-10"],
+    "examples": ["Set 'approved=true' and 'amount=5000' on instance 'abc123'"]
+  },
+  "getProcessInstanceVariable": {
+    "name": "processInstance_getVariable",
+    "description": "Retrieve a single named variable from an active process instance. Returns the variable value, type, and scope.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-10"],
+    "examples": []
+  },
+  "setProcessInstanceVariable": {
+    "name": "processInstance_setVariable",
+    "description": "Set a single named variable on an active process instance. Provide the variable name, value, and type. Overwrites any existing value for that variable.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": ["FR-10"],
+    "examples": []
+  },
+  "deleteProcessInstanceVariable": {
+    "name": "processInstance_deleteVariable",
+    "description": "Delete a single named variable from an active process instance. Use to remove variables that are no longer needed in the process context.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getActivityInstanceTree": {
+    "name": "processInstance_getActivityTree",
+    "description": "Retrieve the activity instance tree for a process instance. Shows current active activities, called sub-processes, and execution structure.",
+    "expose": true,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "modifyProcessInstance": {
+    "name": "processInstance_modify",
+    "description": "Modify a running process instance: cancel activities or start activities at specific points. Advanced operation for correcting execution paths.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryProcessInstances": {
+    "name": "processInstance_query",
+    "description": "Query process instances using POST body for complex filter criteria. Equivalent to list but supports larger filter sets not suitable for query params.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "queryProcessInstancesCount": {
+    "name": "processInstance_queryCount",
+    "description": "Count process instances using POST body filter. Use for large or complex filter criteria.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "correlateMessageAsyncOperation": {
+    "name": "processInstance_correlateMessage",
+    "description": "Correlate a message asynchronously to multiple process instances matching a query. Use for bulk message correlation without waiting for completion.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteProcessInstancesAsyncOperation": {
+    "name": "processInstance_deleteBatch",
+    "description": "Delete multiple process instances asynchronously using a query or explicit ID list. Returns a batch operation ID for monitoring.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateSuspensionState": {
+    "name": "processInstance_setSuspensionBatch",
+    "description": "Suspend or resume multiple process instances matching a filter query in a single operation. Use for bulk state management.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateSuspensionStateAsyncOperation": {
+    "name": "processInstance_setSuspensionAsync",
+    "description": "Suspend or resume multiple process instances asynchronously via batch operation. Returns a job ID for monitoring progress.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setVariablesAsyncOperation": {
+    "name": "processInstance_setVariablesAsync",
+    "description": "Set variables on multiple process instances asynchronously using a batch operation. Returns a job ID for monitoring.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessInstanceComments": {
+    "name": "processInstance_getComments",
+    "description": "Retrieve all comments attached to a process instance. Returns comment text, author, and timestamp for each entry.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteProcessInstanceComments": {
+    "name": "processInstance_deleteComments",
+    "description": "Delete all comments from a process instance. Use with caution as this removes the full comment history.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteProcessInstanceComment": {
+    "name": "processInstance_deleteComment",
+    "description": "Delete a single comment by ID from a process instance. Use when a specific comment must be removed.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "updateProcessInstanceComment": {
+    "name": "processInstance_updateComment",
+    "description": "Update the text of a comment attached to a process instance.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getProcessInstanceVariableBinary": {
+    "name": "processInstance_getVariableBinary",
+    "description": "Retrieve the binary data of a file or byte array variable from a process instance.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "setProcessInstanceVariableBinary": {
+    "name": "processInstance_setVariableBinary",
+    "description": "Upload binary data as a variable on a process instance. Use for file or byte array variables.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  },
+  "modifyProcessInstanceAsyncOperation": {
+    "name": "processInstance_modifyAsync",
+    "description": "Modify a running process instance asynchronously. Cancel or start activities without blocking. Returns a batch job ID.",
+    "expose": false,
+    "tags": ["processInstance"],
+    "frMapping": [],
+    "examples": []
+  }
+}

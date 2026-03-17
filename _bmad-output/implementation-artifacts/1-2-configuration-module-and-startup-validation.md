@@ -1,6 +1,6 @@
 # Story 1.2: Configuration Module & Startup Validation
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,30 +22,30 @@ so that misconfiguration is immediately actionable without inspecting source cod
 
 ## Tasks / Subtasks
 
-- [ ] Create `src/config.ts` as the sole `process.env` reader (AC: 5)
-  - [ ] Define `Config` interface/type with all env var fields
-  - [ ] Export `loadConfig(): Config` function
-  - [ ] Required vars: `OPERATON_BASE_URL`, `OPERATON_USERNAME`, `OPERATON_PASSWORD`
-  - [ ] Optional vars: `OPERATON_ENGINE` (default `"default"`), `OPERATON_SKIP_HEALTH_CHECK` (default `false`)
-  - [ ] Fail-fast on missing required vars: `console.error('[operaton-mcp] Missing required env var: {VAR_NAME}')` then `process.exit(1)`
-  - [ ] Check ALL required vars before exiting — report first missing one found
-- [ ] Implement connectivity check in `src/http/client.ts` (AC: 2, 3)
-  - [ ] Export `checkConnectivity(config: Config): Promise<void>` function
-  - [ ] Calls `GET {OPERATON_BASE_URL}/engine` with Basic Auth header
-  - [ ] On failure (network error or non-2xx): log warning with curl diagnostic and return (do NOT exit)
-  - [ ] Skip entirely if `config.skipHealthCheck === true`
-  - [ ] Warning message format exactly: `[operaton-mcp] Warning: Cannot reach Operaton at {url}. Verify with: curl -u $OPERATON_USERNAME:$OPERATON_PASSWORD $OPERATON_BASE_URL/engine`
-- [ ] Wire `loadConfig()` and `checkConnectivity()` into `src/index.ts` (AC: 1, 2, 3)
-  - [ ] Call `loadConfig()` first — any config failure exits before doing anything else
-  - [ ] Call `await checkConnectivity(config)` after config loaded
-  - [ ] Keep `src/index.ts` under 50 lines
-- [ ] Write unit tests for `src/config.ts`
-  - [ ] Test: missing `OPERATON_BASE_URL` → process.exit(1) called with error message
-  - [ ] Test: missing `OPERATON_USERNAME` → process.exit(1) with correct message
-  - [ ] Test: all vars set → returns Config with correct values
-  - [ ] Test: `OPERATON_ENGINE` unset → defaults to `"default"`
-  - [ ] Test: `OPERATON_SKIP_HEALTH_CHECK=true` → `skipHealthCheck: true` in config
-  - [ ] Use `vi.spyOn(process, 'exit')` to assert exit behavior without actually exiting test process
+- [x] Create `src/config.ts` as the sole `process.env` reader (AC: 5)
+  - [x] Define `Config` interface/type with all env var fields
+  - [x] Export `loadConfig(): Config` function
+  - [x] Required vars: `OPERATON_BASE_URL`, `OPERATON_USERNAME`, `OPERATON_PASSWORD`
+  - [x] Optional vars: `OPERATON_ENGINE` (default `"default"`), `OPERATON_SKIP_HEALTH_CHECK` (default `false`)
+  - [x] Fail-fast on missing required vars: `console.error('[operaton-mcp] Missing required env var: {VAR_NAME}')` then `process.exit(1)`
+  - [x] Check ALL required vars before exiting — report first missing one found
+- [x] Implement connectivity check in `src/http/client.ts` (AC: 2, 3)
+  - [x] Export `checkConnectivity(config: Config): Promise<void>` function
+  - [x] Calls `GET {OPERATON_BASE_URL}/engine` with Basic Auth header
+  - [x] On failure (network error or non-2xx): log warning with curl diagnostic and return (do NOT exit)
+  - [x] Skip entirely if `config.skipHealthCheck === true`
+  - [x] Warning message format exactly: `[operaton-mcp] Warning: Cannot reach Operaton at {url}. Verify with: curl -u $OPERATON_USERNAME:$OPERATON_PASSWORD $OPERATON_BASE_URL/engine`
+- [x] Wire `loadConfig()` and `checkConnectivity()` into `src/index.ts` (AC: 1, 2, 3)
+  - [x] Call `loadConfig()` first — any config failure exits before doing anything else
+  - [x] Call `await checkConnectivity(config)` after config loaded
+  - [x] Keep `src/index.ts` under 50 lines
+- [x] Write unit tests for `src/config.ts`
+  - [x] Test: missing `OPERATON_BASE_URL` → process.exit(1) called with error message
+  - [x] Test: missing `OPERATON_USERNAME` → process.exit(1) with correct message
+  - [x] Test: all vars set → returns Config with correct values
+  - [x] Test: `OPERATON_ENGINE` unset → defaults to `"default"`
+  - [x] Test: `OPERATON_SKIP_HEALTH_CHECK=true` → `skipHealthCheck: true` in config
+  - [x] Use `vi.spyOn(process, 'exit')` to assert exit behavior without actually exiting test process
 
 ## Dev Notes
 
@@ -125,4 +125,13 @@ claude-sonnet-4-6
 
 ### Completion Notes List
 
+- `src/config.ts` rewritten: Config interface with baseUrl/username/password/engineName/skipHealthCheck; fail-fast per-var with exact message format.
+- `src/http/client.ts` updated: checkConnectivity skips when skipHealthCheck=true; exact warning message format with curl hint.
+- Unit tests: 6 config tests + 4 client connectivity tests. All 16 tests pass.
+
 ### File List
+
+- src/config.ts
+- src/http/client.ts
+- test/unit/config.test.ts (updated)
+- test/unit/http/client.test.ts (new)

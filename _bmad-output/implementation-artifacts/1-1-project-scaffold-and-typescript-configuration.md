@@ -1,6 +1,6 @@
 # Story 1.1: Project Scaffold & TypeScript Configuration
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,45 +22,45 @@ so that the project compiles cleanly, runs via `npx operaton-mcp`, and other con
 
 ## Tasks / Subtasks
 
-- [ ] Initialize MCP server scaffold (AC: 1, 2)
-  - [ ] Run `npx @modelcontextprotocol/create-typescript-server operaton-mcp` in a **temp dir outside the repo** and merge output into the repo root — do NOT run inside existing repo root
-  - [ ] Add `@modelcontextprotocol/sdk ^1.27.1` to `dependencies` if not already present from scaffold
-  - [ ] Add `tsc-alias` to `devDependencies`
-- [ ] Configure `package.json` (AC: 2)
-  - [ ] Set `"type": "module"` for ESM
-  - [ ] Add `"prepare": "npm run generate && tsc && tsc-alias"` script (generation before compile, alias rewrite after)
-  - [ ] Add `"build": "npm run generate && tsc && tsc-alias"` script
-  - [ ] Add `"bin": { "operaton-mcp": "./dist/index.js" }` entry
-  - [ ] Add `"files": ["dist/", "README.md"]` to exclude src/test/scripts/config/resources from npm package
-  - [ ] Node.js 22 LTS engine constraint: `"engines": { "node": ">=22" }`
-- [ ] Configure `tsconfig.json` (AC: 5)
-  - [ ] Set `"strict": true` — frozen, never disable individual flags
-  - [ ] Set `"module": "NodeNext"`, `"moduleResolution": "NodeNext"`
-  - [ ] Set `"outDir": "dist/"`
-  - [ ] Add `"paths": { "@generated/*": ["src/generated/*"] }` path alias
-  - [ ] Set `"target": "ES2022"` or later
-- [ ] Configure `src/index.ts` entry point (AC: 3)
-  - [ ] Add `#!/usr/bin/env node` shebang as first line
-  - [ ] Keep file under 50 lines
-  - [ ] Use `console.error()` exclusively — `console.log()` is FORBIDDEN (corrupts JSON-RPC stdio stream)
-  - [ ] Stub out `registerAllTools` call (can be no-op barrel until Story 1.4 generates real code)
-- [ ] Configure `.gitignore` (AC: 4)
-  - [ ] Add `src/generated/` — build artifact, never committed
-  - [ ] Add `resources/*.prev.json` — spec diff convenience file
-  - [ ] Add `dist/` — compiled output (included in npm via `files` field, not in git)
-- [ ] Create `vitest.config.ts` for test framework setup
-  - [ ] Configure test file patterns for `test/unit/**`, `test/smoke/**`, `test/integration/**`
-  - [ ] Integration tests should be skipped by default when `OPERATON_BASE_URL` is unset
-- [ ] Create placeholder directory structure (AC: 2)
-  - [ ] `src/http/` (empty placeholder for Story 1.3)
-  - [ ] `src/tools/` (empty; hand-written wrappers added per domain story)
-  - [ ] `config/` directory for manifests (Story 1.4)
-  - [ ] `resources/` with `operaton-rest-api.json` OpenAPI spec
-  - [ ] `scripts/` for `generate.ts` (Story 1.4)
-  - [ ] `test/unit/`, `test/smoke/`, `test/integration/` directories
-- [ ] Verify cold-start works (AC: 1)
-  - [ ] `npm install` → `prepare` runs without errors
-  - [ ] `npm run build` completes with `dist/index.js` present
+- [x] Initialize MCP server scaffold (AC: 1, 2)
+  - [x] Run `npx @modelcontextprotocol/create-typescript-server operaton-mcp` in a **temp dir outside the repo** and merge output into the repo root — do NOT run inside existing repo root
+  - [x] Add `@modelcontextprotocol/sdk ^1.27.1` to `dependencies` if not already present from scaffold
+  - [x] Add `tsc-alias` to `devDependencies`
+- [x] Configure `package.json` (AC: 2)
+  - [x] Set `"type": "module"` for ESM
+  - [x] Add `"prepare": "npm run generate && tsc && tsc-alias"` script (generation before compile, alias rewrite after)
+  - [x] Add `"build": "npm run generate && tsc && tsc-alias"` script
+  - [x] Add `"bin": { "operaton-mcp": "./dist/index.js" }` entry
+  - [x] Add `"files": ["dist/", "README.md"]` to exclude src/test/scripts/config/resources from npm package
+  - [x] Node.js 22 LTS engine constraint: `"engines": { "node": ">=22" }`
+- [x] Configure `tsconfig.json` (AC: 5)
+  - [x] Set `"strict": true` — frozen, never disable individual flags
+  - [x] Set `"module": "NodeNext"`, `"moduleResolution": "NodeNext"`
+  - [x] Set `"outDir": "dist/"`
+  - [x] Add `"paths": { "@generated/*": ["src/generated/*"] }` path alias
+  - [x] Set `"target": "ES2022"` or later
+- [x] Configure `src/index.ts` entry point (AC: 3)
+  - [x] Add `#!/usr/bin/env node` shebang as first line
+  - [x] Keep file under 50 lines
+  - [x] Use `console.error()` exclusively — `console.log()` is FORBIDDEN (corrupts JSON-RPC stdio stream)
+  - [x] Stub out `registerAllTools` call (can be no-op barrel until Story 1.4 generates real code)
+- [x] Configure `.gitignore` (AC: 4)
+  - [x] Add `src/generated/` — build artifact, never committed
+  - [x] Add `resources/*.prev.json` — spec diff convenience file
+  - [x] Add `dist/` — compiled output (included in npm via `files` field, not in git)
+- [x] Create `vitest.config.ts` for test framework setup
+  - [x] Configure test file patterns for `test/unit/**`, `test/smoke/**`, `test/integration/**`
+  - [x] Integration tests should be skipped by default when `OPERATON_BASE_URL` is unset
+- [x] Create placeholder directory structure (AC: 2)
+  - [x] `src/http/` (empty placeholder for Story 1.3)
+  - [x] `src/tools/` (empty; hand-written wrappers added per domain story)
+  - [x] `config/` directory for manifests (Story 1.4)
+  - [x] `resources/` with `operaton-rest-api.json` OpenAPI spec
+  - [x] `scripts/` for `generate.ts` (Story 1.4)
+  - [x] `test/unit/`, `test/smoke/`, `test/integration/` directories
+- [x] Verify cold-start works (AC: 1)
+  - [x] `npm install` → `prepare` runs without errors
+  - [x] `npm run build` completes with `dist/index.js` present
 
 ## Dev Notes
 
@@ -135,6 +135,32 @@ claude-sonnet-4-6
 
 ### Debug Log References
 
+- `@modelcontextprotocol/create-typescript-server` package not found on npm; scaffold created manually following architecture spec.
+- NodeNext ESM requires `.js` extension on imports; tsconfig paths configured as `"@generated/*.js": ["src/generated/*.ts"]` for tsc-alias compatibility.
+
 ### Completion Notes List
 
+- Scaffold created manually (create-typescript-server package unavailable); all required files created per architecture spec.
+- `package.json`: type=module, prepare/build scripts, bin entry, files field, engines node>=22.
+- `tsconfig.json`: strict=true, NodeNext module, outDir=dist/, @generated path alias, baseUrl=. for alias resolution.
+- `src/index.ts`: 13 lines with shebang, stubs for config/client/registerAllTools. No console.log anywhere.
+- `.gitignore` updated with src/generated/, resources/*.prev.json, dist/.
+- `vitest.config.ts` configured for unit/smoke/integration test patterns.
+- Directory structure created: src/http/, src/tools/, src/generated/, config/, scripts/, test/{unit,smoke,integration}/.
+- Unit tests added: config.test.ts (2 tests), http/errors.test.ts (6 tests). All 8 pass.
+- `npm run build` produces dist/index.js with shebang. Full build chain works.
+
 ### File List
+
+- package.json
+- tsconfig.json
+- vitest.config.ts
+- .gitignore
+- src/index.ts
+- src/config.ts
+- src/http/client.ts
+- src/http/errors.ts
+- src/generated/index.ts
+- scripts/generate.ts
+- test/unit/config.test.ts
+- test/unit/http/errors.test.ts

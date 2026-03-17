@@ -1,6 +1,6 @@
 # Story 6.1: Create, Update, and Delete Operaton Users
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

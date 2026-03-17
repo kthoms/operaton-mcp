@@ -1,6 +1,6 @@
 # Story 4.2: Claim, Unclaim, and Delegate Tasks
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

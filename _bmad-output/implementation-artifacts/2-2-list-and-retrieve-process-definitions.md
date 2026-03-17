@@ -1,6 +1,6 @@
 # Story 2.2: List and Retrieve Process Definitions
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -98,6 +98,19 @@ claude-sonnet-4-6
 
 ### Debug Log References
 
+- Fixed generator template: added `isError` passthrough so error responses from client propagate directly rather than being double-wrapped
+
 ### Completion Notes List
 
+- Generated handlers `getProcessDefinitions`, `getProcessDefinition`, `getProcessDefinitionBpmn20Xml` already in place from Story 2.1 manifest
+- Integration tests extended in `test/integration/processDefinition.test.ts`: list no-filter, list by key, get by ID, get XML, not-found error
+- Generator error passthrough added: when response contains `isError`, return it directly
+- `CustomToolEntry.handler` and `deployment.ts` return type updated to include `isError?: boolean`
+
 ### File List
+
+- `scripts/generate.ts`
+- `src/tools/index.ts`
+- `src/tools/deployment.ts`
+- `src/generated/` (regenerated)
+- `test/integration/processDefinition.test.ts`

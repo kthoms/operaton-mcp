@@ -1,6 +1,6 @@
 # Story 6.2: Query Users and Manage Groups
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

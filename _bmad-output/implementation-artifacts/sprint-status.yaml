@@ -44,56 +44,56 @@ story_location: "{project-root}/_bmad-output/implementation-artifacts"
 development_status:
   # Epic 1: Working MCP Server — Install, Configure & Connect
   epic-1: in-progress
-  1-1-project-scaffold-and-typescript-configuration: ready-for-dev
-  1-2-configuration-module-and-startup-validation: ready-for-dev
-  1-3-http-client-factory-and-error-normalization: ready-for-dev
-  1-4-code-generation-pipeline-with-fixture-manifest: ready-for-dev
-  1-5-mcp-server-wiring-and-smoke-test: ready-for-dev
-  1-6-ci-workflows-and-npm-publishing-configuration: ready-for-dev
+  1-1-project-scaffold-and-typescript-configuration: review
+  1-2-configuration-module-and-startup-validation: review
+  1-3-http-client-factory-and-error-normalization: review
+  1-4-code-generation-pipeline-with-fixture-manifest: review
+  1-5-mcp-server-wiring-and-smoke-test: review
+  1-6-ci-workflows-and-npm-publishing-configuration: review
   epic-1-retrospective: optional
 
   # Epic 2: Process Definition & Deployment Management
   epic-2: in-progress
-  2-1-deploy-process-definitions: ready-for-dev
-  2-2-list-and-retrieve-process-definitions: ready-for-dev
-  2-3-delete-process-definitions: ready-for-dev
+  2-1-deploy-process-definitions: review
+  2-2-list-and-retrieve-process-definitions: review
+  2-3-delete-process-definitions: review
   epic-2-retrospective: optional
 
   # Epic 3: Process Instance Lifecycle Control
   epic-3: in-progress
-  3-1-start-and-delete-process-instances: ready-for-dev
-  3-2-query-active-process-instances: ready-for-dev
-  3-3-suspend-and-resume-process-instances: ready-for-dev
-  3-4-read-and-write-process-instance-variables: ready-for-dev
+  3-1-start-and-delete-process-instances: review
+  3-2-query-active-process-instances: review
+  3-3-suspend-and-resume-process-instances: review
+  3-4-read-and-write-process-instance-variables: review
   epic-3-retrospective: optional
 
   # Epic 4: Task Management
   epic-4: in-progress
-  4-1-query-user-tasks: ready-for-dev
-  4-2-claim-unclaim-and-delegate-tasks: ready-for-dev
-  4-3-complete-tasks-and-set-task-variables: ready-for-dev
+  4-1-query-user-tasks: review
+  4-2-claim-unclaim-and-delegate-tasks: review
+  4-3-complete-tasks-and-set-task-variables: review
   epic-4-retrospective: optional
 
   # Epic 5: Job & Incident Operations
   epic-5: in-progress
-  5-1-query-jobs-and-trigger-immediate-execution: ready-for-dev
-  5-2-suspend-resume-and-retry-jobs: ready-for-dev
-  5-3-query-and-resolve-incidents: ready-for-dev
+  5-1-query-jobs-and-trigger-immediate-execution: review
+  5-2-suspend-resume-and-retry-jobs: review
+  5-3-query-and-resolve-incidents: review
   epic-5-retrospective: optional
 
   # Epic 6: User & Group Administration
   epic-6: in-progress
-  6-1-create-update-and-delete-operaton-users: ready-for-dev
-  6-2-query-users-and-manage-groups: ready-for-dev
+  6-1-create-update-and-delete-operaton-users: review
+  6-2-query-users-and-manage-groups: review
   epic-6-retrospective: optional
 
   # Epic 7: Historic Data & Audit
   epic-7: in-progress
-  7-1-query-historic-process-and-activity-instances: ready-for-dev
-  7-2-query-historic-tasks-and-variables: ready-for-dev
+  7-1-query-historic-process-and-activity-instances: review
+  7-2-query-historic-tasks-and-variables: review
   epic-7-retrospective: optional
 
   # Epic 8: Decision & DMN Management
   epic-8: in-progress
-  8-1-deploy-and-evaluate-dmn-decisions: ready-for-dev
+  8-1-deploy-and-evaluate-dmn-decisions: review
   epic-8-retrospective: optional

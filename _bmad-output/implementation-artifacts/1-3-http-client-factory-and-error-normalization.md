@@ -1,6 +1,6 @@
 # Story 1.3: HTTP Client Factory & Error Normalization
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,40 +22,40 @@ so that all tool handlers are protected from raw HTTP concerns and no silent fai
 
 ## Tasks / Subtasks
 
-- [ ] Complete `src/http/client.ts` — HTTP client factory (AC: 1, 4)
-  - [ ] Define `OperatonClient` type with typed HTTP methods: `get`, `post`, `put`, `delete`
-  - [ ] Implement `createOperatonClient(config: Config): OperatonClient` factory
-  - [ ] Inject `Authorization: Basic {base64(username:password)}` on every request
-  - [ ] Resolve engine name into path at call time: paths contain `{engineName}` template; replace before calling
-  - [ ] All HTTP through Node.js 22 built-in `fetch` — ONLY in this file
-  - [ ] Return parsed JSON response body on success
-  - [ ] On non-2xx: parse Operaton error body and call `normalize()` from `errors.ts`
-  - [ ] Never retry in MVP
-- [ ] Create `src/http/errors.ts` — error normalization (AC: 2, 3)
-  - [ ] Define static error map: `Record<string, { hint: string }>` keyed by Operaton `type` string
-  - [ ] Include at minimum these BPM-domain entries:
-    - `"ProcessEngineException"` → hint about process engine state
-    - `"InvalidRequestException"` → hint about request parameter validation
-    - `"AuthorizationException"` → hint about permissions/credentials
-    - `"NotFoundException"` → hint about checking IDs
-    - `"TaskAlreadyClaimedException"` → hint about unclaiming first
-    - `"__unknown__"` → fallback preserving raw Operaton body
-  - [ ] Implement `normalize(errorBody: unknown): McpToolError` function
-  - [ ] Lookup `errorBody.type` in map; if not found use `__unknown__` fallback
-  - [ ] Output format: `[{errorType}] {message} — Suggested action: {hint}`
-  - [ ] `McpToolError` shape: `{ isError: true, content: [{ type: "text", text: string }] }`
-- [ ] Write unit tests `test/unit/http/client.test.ts` (AC: 5)
-  - [ ] Test auth header: base64 encode `username:password` correctly
-  - [ ] Test engine name injection: `{engineName}` in path replaced with config value
-  - [ ] Test successful response: returns parsed JSON
-  - [ ] Test 4xx response: calls normalize, returns structured error
-  - [ ] Mock `fetch` using `vi.stubGlobal('fetch', mockFetch)` or undici MockAgent
-- [ ] Write unit tests `test/unit/http/errors.test.ts` (AC: 5)
-  - [ ] Test: known error type `"ProcessEngineException"` → correct hint in output
-  - [ ] Test: known error type `"NotFoundException"` → correct hint
-  - [ ] Test: known error type `"AuthorizationException"` → correct hint
-  - [ ] Test: unknown type → `__unknown__` fallback, raw body preserved
-  - [ ] Test: missing `type` field → `__unknown__` fallback
+- [x] Complete `src/http/client.ts` — HTTP client factory (AC: 1, 4)
+  - [x] Define `OperatonClient` type with typed HTTP methods: `get`, `post`, `put`, `delete`
+  - [x] Implement `createOperatonClient(config: Config): OperatonClient` factory
+  - [x] Inject `Authorization: Basic {base64(username:password)}` on every request
+  - [x] Resolve engine name into path at call time: paths contain `{engineName}` template; replace before calling
+  - [x] All HTTP through Node.js 22 built-in `fetch` — ONLY in this file
+  - [x] Return parsed JSON response body on success
+  - [x] On non-2xx: parse Operaton error body and call `normalize()` from `errors.ts`
+  - [x] Never retry in MVP
+- [x] Create `src/http/errors.ts` — error normalization (AC: 2, 3)
+  - [x] Define static error map: `Record<string, { hint: string }>` keyed by Operaton `type` string
+  - [x] Include at minimum these BPM-domain entries:
+    - [x] `"ProcessEngineException"` → hint about process engine state
+    - [x] `"InvalidRequestException"` → hint about request parameter validation
+    - [x] `"AuthorizationException"` → hint about permissions/credentials
+    - [x] `"NotFoundException"` → hint about checking IDs
+    - [x] `"TaskAlreadyClaimedException"` → hint about unclaiming first
+    - [x] `"__unknown__"` → fallback preserving raw Operaton body
+  - [x] Implement `normalize(errorBody: unknown): McpToolError` function
+  - [x] Lookup `errorBody.type` in map; if not found use `__unknown__` fallback
+  - [x] Output format: `[{errorType}] {message} — Suggested action: {hint}`
+  - [x] `McpToolError` shape: `{ isError: true, content: [{ type: "text", text: string }] }`
+- [x] Write unit tests `test/unit/http/client.test.ts` (AC: 5)
+  - [x] Test auth header: base64 encode `username:password` correctly
+  - [x] Test engine name injection: `{engineName}` in path replaced with config value
+  - [x] Test successful response: returns parsed JSON
+  - [x] Test 4xx response: calls normalize, returns structured error
+  - [x] Mock `fetch` using `vi.stubGlobal('fetch', mockFetch)` or undici MockAgent
+- [x] Write unit tests `test/unit/http/errors.test.ts` (AC: 5)
+  - [x] Test: known error type `"ProcessEngineException"` → correct hint in output
+  - [x] Test: known error type `"NotFoundException"` → correct hint
+  - [x] Test: known error type `"AuthorizationException"` → correct hint
+  - [x] Test: unknown type → `__unknown__` fallback, raw body preserved
+  - [x] Test: missing `type` field → `__unknown__` fallback
 
 ## Dev Notes
 
@@ -132,4 +132,13 @@ claude-sonnet-4-6
 
 ### Completion Notes List
 
+- `src/http/errors.ts`: McpToolError type, 5 BPM-domain entries + __unknown__ fallback. normalize(errorBody) uses `[type] message — Suggested action: hint` format.
+- `src/http/client.ts`: createOperatonClient resolves `{engineName}` in paths, injects Basic Auth, calls normalize() on non-2xx. checkConnectivity remains here.
+- 7 error tests + 8 client tests. All 21 tests pass.
+
 ### File List
+
+- src/http/client.ts
+- src/http/errors.ts
+- test/unit/http/client.test.ts (updated)
+- test/unit/http/errors.test.ts (updated)

@@ -3,3 +3,13 @@ _bmad
 .gemini
 .idea
 .github/skills
+
+# Build artifacts
+dist/
+node_modules/
+
+# Generated code — produced by scripts/generate.ts at build time
+src/generated/
+
+# Spec diff convenience files (authoritative change record is git history)
+resources/*.prev.json

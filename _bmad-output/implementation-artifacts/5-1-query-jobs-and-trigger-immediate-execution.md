@@ -1,6 +1,6 @@
 # Story 5.1: Query Jobs and Trigger Immediate Execution
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

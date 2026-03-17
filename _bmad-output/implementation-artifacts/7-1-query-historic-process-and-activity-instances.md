@@ -1,6 +1,6 @@
 # Story 7.1: Query Historic Process and Activity Instances
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 

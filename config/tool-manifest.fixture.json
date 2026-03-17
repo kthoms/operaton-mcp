@@ -1,0 +1,90 @@
+{
+  "createDeployment": {
+    "name": "deployment_create",
+    "description": "Deploy a BPMN or DMN artifact to Operaton. Upload process definitions, DMN tables, or CMMN cases. Returns deployment ID and resource names on success.",
+    "expose": true,
+    "tags": ["deployment"],
+    "frMapping": ["FR-01"],
+    "examples": ["Deploy loan-approval.bpmn to the default engine"]
+  },
+  "getProcessDefinitions": {
+    "name": "processDefinition_list",
+    "description": "List deployed process definitions. Filter by key, name, version, category, or tenant to find specific definitions. Returns key, id, version, and deployment info.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-02"],
+    "examples": ["List all versions of 'loan-approval' process definition"]
+  },
+  "getProcessDefinition": {
+    "name": "processDefinition_getById",
+    "description": "Retrieve a single process definition by its unique ID. Returns full metadata including key, version, deployment ID, and tenant.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": ["Get definition details for id 'loan-approval:1:abc123'"]
+  },
+  "getProcessDefinitionsCount": {
+    "name": "processDefinition_count",
+    "description": "Count deployed process definitions matching filter criteria. Useful for pagination planning before listing.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": [],
+    "examples": []
+  },
+  "deleteProcessDefinition": {
+    "name": "processDefinition_deleteById",
+    "description": "Delete a process definition by ID. Use cascade=true to also remove running instances, history, and dependent resources.",
+    "expose": true,
+    "tags": ["processDefinition"],
+    "frMapping": ["FR-04"],
+    "examples": ["Delete definition 'loan-approval:1:abc123' without cascading"]
+  },
+  "getTasks": {
+    "name": "task_list",
+    "description": "Query user tasks with rich filtering: by assignee, candidate group, process instance, variables, due date, and more. Returns task metadata for operator review.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": ["FR-11"],
+    "examples": ["Find all unassigned tasks in the 'loan-review' process"]
+  },
+  "getTask": {
+    "name": "task_getById",
+    "description": "Retrieve a single user task by its ID. Returns task name, assignee, due date, priority, and associated process instance.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": ["Get details for task id 'abc123'"]
+  },
+  "getTasksCount": {
+    "name": "task_count",
+    "description": "Count user tasks matching filter criteria. Supports same filters as task list. Useful for workload sizing.",
+    "expose": true,
+    "tags": ["task"],
+    "frMapping": [],
+    "examples": []
+  },
+  "getIncidents": {
+    "name": "incident_list",
+    "description": "List active incidents across the engine. Filter by type, message, process definition, or activity. Incidents indicate failed jobs, failed scripts, or custom conditions.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": ["FR-22"],
+    "examples": ["List all failedJob incidents for process key 'loan-approval'"]
+  },
+  "getIncident": {
+    "name": "incident_getById",
+    "description": "Retrieve a single incident by its ID. Returns incident type, message, cause, root cause, process definition ID, and activity ID.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": ["Get details for incident id 'inc123'"]
+  },
+  "getIncidentsCount": {
+    "name": "incident_count",
+    "description": "Count active incidents matching filter criteria. Use to gauge operational health before investigating individual incidents.",
+    "expose": true,
+    "tags": ["incident"],
+    "frMapping": [],
+    "examples": []
+  }
+}

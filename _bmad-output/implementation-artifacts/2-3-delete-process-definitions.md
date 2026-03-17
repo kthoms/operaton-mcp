@@ -1,6 +1,6 @@
 # Story 2.3: Delete Process Definitions
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -87,4 +87,12 @@ claude-sonnet-4-6
 
 ### Completion Notes List
 
+- Generator null-response handling added: 204 No Content returns `"{operationId} completed successfully."`
+- `deleteProcessDefinition` manifest entry already in place from Story 2.1 with `frMapping: ["FR-04"]`
+- Integration tests: delete success + not-found error (8 total integration tests, all skipped when no live instance)
+
 ### File List
+
+- `scripts/generate.ts`
+- `src/generated/` (regenerated)
+- `test/integration/processDefinition.test.ts`

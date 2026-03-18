@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit",
     "check:license": "node --import tsx/esm scripts/check-license.ts",
     "add:license": "node --import tsx/esm scripts/add-license.ts",
-    "check:commits": "commitlint --from HEAD~1 --to HEAD"
+    "check:commits": "commitlint --config commitlint.config.ts --from HEAD~1 --to HEAD"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",

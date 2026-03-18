@@ -53,10 +53,10 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: Process Definition & Deployment Management
-  epic-2: in-progress
-  2-1-deploy-process-definitions: review
-  2-2-list-and-retrieve-process-definitions: review
-  2-3-delete-process-definitions: review
+  epic-2: done
+  2-1-deploy-process-definitions: done
+  2-2-list-and-retrieve-process-definitions: done
+  2-3-delete-process-definitions: done
   epic-2-retrospective: optional
 
   # Epic 3: Process Instance Lifecycle Control

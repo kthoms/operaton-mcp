@@ -138,18 +138,19 @@ function propAccess(name: string): string {
 
 // ── Zod type helper ──────────────────────────────────────────────────────────
 
-function zodType(schema?: { type?: string; format?: string; items?: { type?: string } }): string {
-  if (!schema) return "z.string().optional()";
+function zodType(schema?: { type?: string; format?: string; items?: { type?: string } }, isPathParam?: boolean): string {
+  const optional = isPathParam ? "" : ".optional()";
+  if (!schema) return `z.string()${optional}`;
   switch (schema.type) {
     case "integer":
     case "number":
-      return "z.number().optional()";
+      return `z.number()${optional}`;
     case "boolean":
-      return "z.boolean().optional()";
+      return `z.boolean()${optional}`;
     case "array":
-      return `z.array(z.${schema.items?.type === "integer" ? "number" : "string"}()).optional()`;
+      return `z.array(z.${schema.items?.type === "integer" ? "number" : "string"}())${optional}`;
     default:
-      return "z.string().optional()";
+      return `z.string()${optional}`;
   }
 }
 
@@ -171,7 +172,7 @@ function emitOperationFile(
 
   const allParams = [...pathParams, ...queryParams];
   const schemaFields = allParams
-    .map((p) => `  ${propKey(p.name)}: ${zodType(p.schema)},`)
+    .map((p) => `  ${propKey(p.name)}: ${zodType(p.schema, p.in === "path")},`)
     .join("\n");
 
   const method = specOp.method.toLowerCase();
@@ -318,7 +319,7 @@ ${groupImports}
 interface ToolEntry {
   description: string;
   schema: z.ZodObject<z.ZodRawShape>;
-  handler: (input: Record<string, unknown>) => Promise<{ isError?: boolean; content: Array<{ type: "text"; text: string }> }>;
+  handler: (input: any) => Promise<{ isError?: boolean; content: Array<{ type: "text"; text: string }> }>;
   group: string;
 }
 
@@ -354,8 +355,8 @@ ${customToolsMerge}
         ],
       };
     }
-    const input = (request.params.arguments ?? {}) as Record<string, unknown>;
-    return tool.handler(input);
+    const input = request.params.arguments ?? {};
+    return tool.handler(input as unknown);
   });
 }
 `;

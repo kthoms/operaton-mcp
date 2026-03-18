@@ -68,10 +68,10 @@ development_status:
   epic-3-retrospective: optional
 
   # Epic 4: Task Management
-  epic-4: in-progress
-  4-1-query-user-tasks: review
-  4-2-claim-unclaim-and-delegate-tasks: review
-  4-3-complete-tasks-and-set-task-variables: review
+  epic-4: done
+  4-1-query-user-tasks: done
+  4-2-claim-unclaim-and-delegate-tasks: done
+  4-3-complete-tasks-and-set-task-variables: done
   epic-4-retrospective: optional
 
   # Epic 5: Job & Incident Operations

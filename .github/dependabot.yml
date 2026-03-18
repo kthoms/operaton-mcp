@@ -1,0 +1,24 @@
+# Please see the documentation for more information:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# https://containers.dev/guide/dependabot
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:npm"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:github-action"

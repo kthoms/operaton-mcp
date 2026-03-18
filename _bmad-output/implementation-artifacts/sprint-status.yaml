@@ -60,11 +60,11 @@ development_status:
   epic-2-retrospective: optional
 
   # Epic 3: Process Instance Lifecycle Control
-  epic-3: in-progress
-  3-1-start-and-delete-process-instances: review
-  3-2-query-active-process-instances: review
-  3-3-suspend-and-resume-process-instances: review
-  3-4-read-and-write-process-instance-variables: review
+  epic-3: done
+  3-1-start-and-delete-process-instances: done
+  3-2-query-active-process-instances: done
+  3-3-suspend-and-resume-process-instances: done
+  3-4-read-and-write-process-instance-variables: done
   epic-3-retrospective: optional
 
   # Epic 4: Task Management

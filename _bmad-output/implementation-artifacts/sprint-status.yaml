@@ -75,10 +75,10 @@ development_status:
   epic-4-retrospective: optional
 
   # Epic 5: Job & Incident Operations
-  epic-5: in-progress
-  5-1-query-jobs-and-trigger-immediate-execution: review
-  5-2-suspend-resume-and-retry-jobs: review
-  5-3-query-and-resolve-incidents: review
+  epic-5: done
+  5-1-query-jobs-and-trigger-immediate-execution: done
+  5-2-suspend-resume-and-retry-jobs: done
+  5-3-query-and-resolve-incidents: done
   epic-5-retrospective: optional
 
   # Epic 6: User & Group Administration

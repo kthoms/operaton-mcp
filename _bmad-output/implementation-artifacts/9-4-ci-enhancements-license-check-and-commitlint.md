@@ -1,6 +1,6 @@
 # Story 9.4: CI Enhancements — License Check & Commitlint
 
-Status: draft
+Status: review
 
 ## Story
 
@@ -24,14 +24,14 @@ so that contributors receive immediate, clear feedback when their contribution i
 
 ## Tasks / Subtasks
 
-- [ ] Create `.nvmrc` at project root with current LTS Node.js version (e.g., `22`) (AC: 4)
-- [ ] Update `.github/workflows/ci.yml` to read Node.js version from `.nvmrc` via `node-version-file: .nvmrc` (AC: 4)
-- [ ] Add `commitlint` dev dependencies: `@commitlint/cli` and `@commitlint/config-conventional` (AC: 2, 5)
-- [ ] Create `.commitlintrc.json` with `extends: ['@commitlint/config-conventional']` and the defined scope list (AC: 5)
-- [ ] Add `check:commits` script to `package.json` (e.g., `commitlint --from HEAD~1 --to HEAD`) (AC: 2)
-- [ ] Add license check step to `.github/workflows/ci.yml` using `npm run check:license` (from Story 9.1) (AC: 1, 3)
-- [ ] Add commitlint step to `.github/workflows/ci.yml` (AC: 2, 3)
-- [ ] Verify all existing CI tests still pass (AC: 6)
+- [x] Create `.nvmrc` at project root with current LTS Node.js version (e.g., `22`) (AC: 4)
+- [x] Update `.github/workflows/ci.yml` to read Node.js version from `.nvmrc` via `node-version-file: .nvmrc` (AC: 4)
+- [x] Add `commitlint` dev dependencies: `@commitlint/cli` and `@commitlint/config-conventional` (AC: 2, 5)
+- [x] Create `.commitlintrc.json` with `extends: ['@commitlint/config-conventional']` and the defined scope list (AC: 5)
+- [x] Add `check:commits` script to `package.json` (e.g., `commitlint --from HEAD~1 --to HEAD`) (AC: 2)
+- [x] Add license check step to `.github/workflows/ci.yml` using `npm run check:license` (from Story 9.1) (AC: 1, 3)
+- [x] Add commitlint step to `.github/workflows/ci.yml` (AC: 2, 3)
+- [x] Verify all existing CI tests still pass (AC: 6)
 
 ## Dev Notes
 
@@ -106,8 +106,35 @@ For `node-version-file`:
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
+
+- Build failed after adding license headers to `src/index.ts` because the shebang (`#!/usr/bin/env node`) was pushed to line 15. Fixed by updating `scripts/license-header.ts` to export `hasLicenseHeader()` that accepts shebang files, restoring `src/index.ts` with shebang first, and updating all scripts/tests to use the same logic.
 
 ### Completion Notes List
 
+- Created `.nvmrc` with `22` (Node.js LTS major version) at project root (AC 4).
+- Updated `.github/workflows/ci.yml`: `node-version: '22'` → `node-version-file: .nvmrc`; added `fetch-depth: 0` for full history; added "Check license headers" step; added "Check commit messages" step (runs only on `pull_request`) (AC 1, 2, 3, 4, 6).
+- Added `@commitlint/cli` and `@commitlint/config-conventional` to devDependencies (AC 2, 5).
+- Created `.commitlintrc.json` with all 12 Story 9.2 scopes and `scope-empty: [0]` to allow scope-less commits (AC 5).
+- Added `check:commits` script to `package.json` (AC 2).
+- Also fixed `scripts/license-header.ts` to export `hasLicenseHeader()` for shebang-aware header detection; updated `check-license.ts`, `add-license.ts`, and `license.test.ts` to use it.
+- All 43 unit tests pass after changes.
+
 ### File List
+
+- `.nvmrc` (new)
+- `.commitlintrc.json` (new)
+- `.github/workflows/ci.yml` (modified)
+- `package.json` (modified — added commitlint devDependencies and check:commits script)
+- `scripts/license-header.ts` (modified — added `hasLicenseHeader` export)
+- `scripts/check-license.ts` (modified — imports `hasLicenseHeader` from `license-header.ts`)
+- `scripts/add-license.ts` (modified — imports `hasLicenseHeader` from `license-header.ts`)
+- `src/index.ts` (modified — shebang restored to first line)
+- `test/unit/scripts/license.test.ts` (modified — uses shebang-aware `hasLicenseHeader`)
+- `package-lock.json` (modified — commitlint packages added)
+
+## Change Log
+
+- 2026-03-18: Implemented Story 9.4 — added .nvmrc, .commitlintrc.json, commitlint dependencies, updated CI workflow with license check and commitlint steps, fixed shebang-aware license header handling.

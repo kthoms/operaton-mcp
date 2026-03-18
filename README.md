@@ -89,19 +89,139 @@ Once connected, you can ask your AI assistant natural-language questions about y
 
 ## Available Tool Groups
 
-| Group | Description |
-|---|---|
-| `deployment` | Deploy BPMN, DMN, and CMMN artifacts |
-| `processDefinition` | List, inspect, and delete process definitions |
-| `processInstance` | Start, query, suspend, resume, and delete process instances |
-| `task` | Query, claim, complete, and manage user tasks |
-| `job` | Query jobs, trigger immediate execution, suspend/resume |
-| `jobDefinition` | Query and manage job definitions |
-| `incident` | List and resolve process incidents |
-| `user` | Create, update, and delete Operaton users |
-| `group` | Query and manage Operaton groups and memberships |
-| `history` | Query historic process instances, activities, tasks, and variables |
-| `decision` | Deploy and evaluate DMN decision tables |
+### `processDefinition`
+
+Manage deployed process definitions — browse, inspect, suspend, and delete BPMN definitions.
+
+- **list** — query definitions with optional filters (key, name, version, tenant); count total matches
+- **get by ID / key** — retrieve definition metadata for a specific ID or latest by key
+- **get XML** — fetch BPMN 2.0 XML for a definition by ID or key
+- **statistics** — process-level and activity-level statistics across all running instances
+- **suspend by key** — suspend or resume all instances belonging to a definition
+- **delete by ID / key** — remove a definition (and optionally its instances and history)
+- **restart instances** — restart historic process instances synchronously or asynchronously
+- **set history TTL** — update the history time-to-live for a definition
+- **get called processes** — list static called process definitions for a given definition
+
+### `deployment`
+
+Deploy, inspect, and manage Operaton deployments (BPMN, DMN, CMMN, and form files).
+
+- **create** — upload a BPMN/DMN/CMMN resource to create a new deployment
+- **list** — query deployments with optional filters; count total matches
+- **get by ID** — retrieve metadata for a specific deployment
+- **list resources** — list all resources included in a deployment
+- **redeploy** — create a new deployment from the resources of an existing one
+- **delete** — remove a deployment by ID
+
+### `processInstance`
+
+Start and manage the lifecycle of running process instances.
+
+- **start** — start a new instance by definition ID or key, with optional business key and variables
+- **list** — query active instances with filters; count total matches
+- **get** — retrieve metadata for a specific instance
+- **get activity tree** — inspect the current activity instance hierarchy
+- **suspend / resume** — suspend or resume execution of an instance or a group of instances
+- **delete** — terminate and remove a process instance
+- **get / set variables** — read or write individual or multiple process variables
+- **set suspension** — bulk suspend/resume by definition ID, key, or tenant
+
+### `task`
+
+Query and manage the full lifecycle of user tasks.
+
+- **list** — query tasks with rich filter criteria; count total matches
+- **get** — retrieve a task by ID
+- **claim / unclaim** — assign or release a task
+- **complete** — complete a task with optional output variables
+- **delegate** — delegate a task to another user
+- **resolve** — resolve a delegated task back to the owner
+- **set assignee** — directly set or change task assignee
+- **create / update** — create a standalone task or update task properties
+- **get / set variables** — read or write task-local variables
+- **throw BPMN error** — trigger a BPMN error boundary event from a task
+
+### `job`
+
+Inspect and control asynchronous jobs (timers, async continuations, retries).
+
+- **list** — query jobs with filters; count total matches
+- **get** — retrieve a job by ID
+- **trigger execution** — execute a job immediately (bypass timer)
+- **suspend / resume** — suspend or resume a job
+- **set retries** — update the retry count on a failed job
+- **get stack trace** — retrieve the exception stack trace for a failed job
+
+### `jobDefinition`
+
+Manage job definitions — the templates from which individual jobs are created.
+
+- **list** — query job definitions with filters
+- **get** — retrieve a job definition by ID
+- **set suspension** — suspend or activate job definitions by process definition
+
+### `incident`
+
+Query and resolve process incidents (failed jobs, failed external tasks, etc.).
+
+- **list** — query open incidents with filters; count total matches
+- **get** — retrieve an incident by ID
+- **resolve** — resolve an open incident
+
+### `user`
+
+Manage Operaton users and their credentials.
+
+- **list** — query users with filters
+- **get profile** — retrieve a user's profile information
+- **create** — create a new user with profile and credentials
+- **update profile** — update a user's display name and email
+- **update password** — change a user's password
+- **delete** — remove a user
+- **unlock** — unlock a user account after too many failed logins
+
+### `group`
+
+Manage Operaton groups and their memberships.
+
+- **list** — query groups with filters
+- **create / delete** — create or remove a group
+- **add / remove member** — manage group membership
+
+### `history`
+
+Query the audit trail of completed and historic process data.
+
+- **list process instances** — query finished or active process instances in history
+- **list activity instances** — query historic activity executions
+- **list task instances** — query historic task completions and assignments
+- **list variable instances** — query historic variable values
+- **list incidents** — query historic incidents (including resolved)
+- **list job logs** — query historic job execution log entries
+- **list user operations** — query the audit log of user operations (claims, completions, etc.)
+
+### `decision`
+
+Deploy and evaluate DMN decision tables.
+
+- **list** — query deployed decision definitions
+- **get by key** — retrieve a decision definition by key
+- **get XML by key** — fetch DMN XML for a decision
+- **evaluate** — evaluate a decision table with input variables
+- **list requirements** — list decision requirement diagrams (DRDs)
+
+## Out of Scope
+
+The following capabilities are not available in the current release:
+
+- **Autonomous monitoring** — AI-initiated process health watching and alerting (planned: Vision phase)
+- **BPMN generation** — natural language → BPMN authoring and AI-assisted process design (planned: Growth phase)
+- **Multi-engine support** — connecting to multiple Operaton instances simultaneously (planned: Growth phase)
+- **Prompt templates** — guided scenario workflows for common operational tasks (planned: Growth phase)
+- **UI or dashboard** — no web interface; operaton-mcp is a pure MCP server
+
+Growth and Vision phase features are tracked in the project roadmap.
 
 ## Development
 

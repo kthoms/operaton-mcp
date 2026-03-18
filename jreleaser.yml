@@ -1,0 +1,25 @@
+project:
+  name: operaton-mcp
+  description: MCP server exposing the complete Operaton REST API as AI-callable tools
+  links:
+    homepage: https://github.com/operaton/operaton-mcp
+
+release:
+  github:
+    owner: operaton
+    name: operaton-mcp
+    overwrite: false
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      contributors:
+        format: '- {{contributorName}} ({{contributorUsernameAsLink}})'
+
+distributions:
+  operaton-mcp:
+    type: FLAT_BINARY
+    artifacts:
+      - path: '{{projectName}}-{{projectVersion}}.tgz'
+    npm:
+      packageName: operaton-mcp
+      access: PUBLIC

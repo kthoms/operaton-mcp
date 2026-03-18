@@ -1,0 +1,14 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-enum": [
+      2,
+      "always",
+      [
+        "process", "task", "job", "incident", "history",
+        "decision", "user", "deploy", "config", "ci", "docs", "test"
+      ]
+    ],
+    "scope-empty": [0]
+  }
+}

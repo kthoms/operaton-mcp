@@ -1,5 +1,5 @@
 # generated: 2026-03-17
-# last_updated: 2026-03-17
+# last_updated: 2026-03-18
 # project: operaton-mcp
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-03-17
-last_updated: 2026-03-17
+last_updated: 2026-03-18
 project: operaton-mcp
 project_key: NOKEY
 tracking_system: file-system
@@ -97,3 +97,14 @@ development_status:
   epic-8: in-progress
   8-1-deploy-and-evaluate-dmn-decisions: review
   epic-8-retrospective: optional
+
+  # Epic 9: OSS Project Standards & Release Automation
+  epic-9: in-progress
+  9-1-license-headers-on-source-files: review
+  9-2-contributing-md: review
+  9-3-security-md: review
+  9-4-ci-enhancements-license-check-and-commitlint: review
+  9-5-jreleaser-configuration: review
+  9-6-release-workflow: review
+  9-7-readme-tool-groups-and-out-of-scope: review
+  epic-9-retrospective: optional

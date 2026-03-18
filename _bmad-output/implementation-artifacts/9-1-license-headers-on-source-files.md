@@ -1,6 +1,6 @@
 # Story 9.1: License Headers on Source Files
 
-Status: draft
+Status: review
 
 ## Story
 
@@ -37,14 +37,14 @@ so that the project's licensing is immediately clear to anyone reading the code 
 
 ## Tasks / Subtasks
 
-- [ ] Add license header tool to dev dependencies — e.g., `addlicense` (Go) via npm wrapper or equivalent JS tool that supports SPDX headers (AC: 2, 3)
-  - [ ] Add `check:license` script to `package.json`: checks all `src/**/*.ts` and `test/**/*.ts`
-  - [ ] Add `add:license` script: inserts header into all files missing it
-- [ ] Run `add:license` to insert header into all existing `.ts` files in `src/`, `test/`, `scripts/` (AC: 1, 4)
-  - [ ] Verify header text exactly matches the Operaton format (copyright line, URL, disclaimer)
-- [ ] Update code generation pipeline (`scripts/generate.ts`) to prepend the license header to every emitted `.ts` file (AC: 5)
-  - [ ] Confirm generated files under `src/generated/` carry the header after `npm run generate`
-- [ ] Verify all existing tests still pass after header addition (AC: 1)
+- [x] Add license header tool to dev dependencies — e.g., `addlicense` (Go) via npm wrapper or equivalent JS tool that supports SPDX headers (AC: 2, 3)
+  - [x] Add `check:license` script to `package.json`: checks all `src/**/*.ts` and `test/**/*.ts`
+  - [x] Add `add:license` script: inserts header into all files missing it
+- [x] Run `add:license` to insert header into all existing `.ts` files in `src/`, `test/`, `scripts/` (AC: 1, 4)
+  - [x] Verify header text exactly matches the Operaton format (copyright line, URL, disclaimer)
+- [x] Update code generation pipeline (`scripts/generate.ts`) to prepend the license header to every emitted `.ts` file (AC: 5)
+  - [x] Confirm generated files under `src/generated/` carry the header after `npm run generate`
+- [x] Verify all existing tests still pass after header addition (AC: 1)
 
 ## Dev Notes
 
@@ -107,8 +107,36 @@ await fs.writeFile(outputPath, LICENSE_HEADER + '\n' + generatedContent)
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
+
+None.
 
 ### Completion Notes List
 
+- Implemented `scripts/license-header.ts` as a shared module exporting the exact `LICENSE_HEADER` constant — single source of truth used by all scripts and the generator.
+- Implemented `scripts/check-license.ts` that checks `src/`, `test/`, `scripts/` for `.ts` files missing the header; exits non-zero and prints offending paths.
+- Implemented `scripts/add-license.ts` that inserts the header into all `.ts` files in `src/`, `test/`, `scripts/` that are missing it.
+- Added `check:license` and `add:license` scripts to `package.json` (uses `node --import tsx/esm`).
+- Updated `scripts/generate.ts` to import `LICENSE_HEADER` from `./license-header.js` and prepend it to every emitted `.ts` file (operation files, group barrels, top-level barrel).
+- Ran `npm run add:license` — added headers to 239 files (all existing src/test/scripts files).
+- Ran `npm run generate` — regenerated all generated files with embedded headers.
+- `npm run check:license` exits 0 — all files covered.
+- All 43 unit tests pass (no regressions; 9 new tests added for license header coverage).
+
 ### File List
+
+- `scripts/license-header.ts` (new)
+- `scripts/check-license.ts` (new)
+- `scripts/add-license.ts` (new)
+- `scripts/generate.ts` (modified — added LICENSE_HEADER import and prepend to all emitters)
+- `package.json` (modified — added `check:license` and `add:license` scripts)
+- `src/**/*.ts` (all modified — license header added)
+- `test/**/*.ts` (all modified — license header added)
+- `test/unit/scripts/license.test.ts` (new)
+- `test/unit/generated/generation.test.ts` (modified — added 3 license header tests)
+
+## Change Log
+
+- 2026-03-18: Implemented Story 9.1 — added Operaton Apache 2.0 license headers to all TypeScript source files, test files, and scripts; implemented check:license and add:license npm scripts; updated code generator to embed headers in all emitted files.

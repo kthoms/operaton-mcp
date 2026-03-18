@@ -1,0 +1,121 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type'
+        required: true
+        type: choice
+        options:
+          - preliminary
+          - final
+      dry_run:
+        description: 'Dry run (no external mutations)'
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # push tags, create releases, push version bump commit
+      id-token: write   # npm provenance attestation
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # ── Preliminary release ─────────────────────────────────────────────────
+
+      - name: Set SNAPSHOT version
+        if: inputs.release_type == 'preliminary'
+        run: |
+          CURRENT=$(node -p "require('./package.json').version.replace(/-SNAPSHOT$/, '')")
+          npm version "$CURRENT-SNAPSHOT" --no-git-tag-version
+          echo "SNAPSHOT_VERSION=$CURRENT-SNAPSHOT" >> "$GITHUB_ENV"
+
+      - name: Publish to NPM (next dist-tag)
+        if: inputs.release_type == 'preliminary' && !inputs.dry_run
+        run: npm publish --tag next --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create pre-release via JReleaser
+        if: inputs.release_type == 'preliminary' && !inputs.dry_run
+        uses: jreleaser/release-action@v2
+        with:
+          arguments: full-release
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_PROJECT_VERSION: ${{ env.SNAPSHOT_VERSION }}
+
+      - name: JReleaser dry-run (preliminary)
+        if: inputs.release_type == 'preliminary' && inputs.dry_run
+        uses: jreleaser/release-action@v2
+        with:
+          arguments: full-release --dry-run
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_PROJECT_VERSION: ${{ env.SNAPSHOT_VERSION }}
+
+      # ── Final release ────────────────────────────────────────────────────────
+
+      - name: Get version for final release
+        if: inputs.release_type == 'final'
+        run: |
+          VERSION=$(node -p "require('./package.json').version.replace(/-SNAPSHOT$/, '')")
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Create and push semver tag
+        if: inputs.release_type == 'final' && !inputs.dry_run
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+
+      - name: Publish to NPM (latest dist-tag, with provenance)
+        if: inputs.release_type == 'final' && !inputs.dry_run
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create release via JReleaser
+        if: inputs.release_type == 'final' && !inputs.dry_run
+        uses: jreleaser/release-action@v2
+        with:
+          arguments: full-release
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: JReleaser dry-run (final)
+        if: inputs.release_type == 'final' && inputs.dry_run
+        uses: jreleaser/release-action@v2
+        with:
+          arguments: full-release --dry-run
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump to next minor SNAPSHOT
+        if: inputs.release_type == 'final' && !inputs.dry_run
+        run: |
+          npm version minor --no-git-tag-version
+          NEXT=$(node -p "require('./package.json').version")
+          npm version "$NEXT-SNAPSHOT" --no-git-tag-version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore(ci): bump version to $NEXT-SNAPSHOT [skip ci]"
+          git push origin main

@@ -1,6 +1,6 @@
 # Story 9.3: SECURITY.md
 
-Status: draft
+Status: review
 
 ## Story
 
@@ -31,12 +31,12 @@ so that I can disclose issues through the correct channel without resorting to p
 
 ## Tasks / Subtasks
 
-- [ ] Create `SECURITY.md` at project root with Operaton license header in HTML comment block (AC: 1)
-- [ ] Add Supported Versions section with version support table (AC: 2)
-- [ ] Add Reporting a Vulnerability section with GitHub Security Advisories link and submission checklist (AC: 3)
-- [ ] Add Response Process section describing acknowledgment, investigation, fix, and advisory timeline (AC: 4)
-- [ ] Add Scope section listing in-scope and out-of-scope areas (AC: 5)
-- [ ] Add legal framing paragraph referencing Apache 2.0 and volunteer-led model (AC: 6)
+- [x] Create `SECURITY.md` at project root with Operaton license header in HTML comment block (AC: 1)
+- [x] Add Supported Versions section with version support table (AC: 2)
+- [x] Add Reporting a Vulnerability section with GitHub Security Advisories link and submission checklist (AC: 3)
+- [x] Add Response Process section describing acknowledgment, investigation, fix, and advisory timeline (AC: 4)
+- [x] Add Scope section listing in-scope and out-of-scope areas (AC: 5)
+- [x] Add legal framing paragraph referencing Apache 2.0 and volunteer-led model (AC: 6)
 
 ## Dev Notes
 
@@ -73,8 +73,27 @@ Same HTML comment format as CONTRIBUTING.md (see Story 9.2 dev notes).
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
+
+None.
 
 ### Completion Notes List
 
+- Created `SECURITY.md` at project root with all required sections.
+- License header present as HTML comment block at top of file (AC 1).
+- Supported Versions section with table showing `1.x.x | ✅` (AC 2).
+- Reporting a Vulnerability section directs to GitHub Security Advisories with link `https://github.com/operaton/operaton-mcp/security/advisories/new` and lists all 5 required submission details (AC 3).
+- Response Process section covers acknowledgment within a few days, investigation updates, fix release, and advisory publication with credit on request (AC 4).
+- Scope section with in-scope (source code, build process, official releases) and out-of-scope (DoS, third-party libs, social engineering, local exploits without privilege escalation) (AC 5).
+- Legal section references Apache License 2.0, volunteer-led model, no contractual commitments or SLA (AC 6).
+- File is at project root; GitHub will automatically surface it in the Security tab (AC 7).
+
 ### File List
+
+- `SECURITY.md` (new)
+
+## Change Log
+
+- 2026-03-18: Implemented Story 9.3 — created SECURITY.md with license header, supported versions, vulnerability reporting process, response timeline, scope definitions, and legal framing.

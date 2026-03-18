@@ -1,6 +1,6 @@
 # Story 9.7: README Tool Groups & Out-of-Scope Section
 
-Status: draft
+Status: review
 
 ## Story
 
@@ -42,18 +42,18 @@ so that I can quickly determine whether operaton-mcp meets my needs and what to 
 
 ## Tasks / Subtasks
 
-- [ ] Expand the "Available Tool Groups" section in `README.md` with all 9 tool groups, per-group descriptions, and operations lists (AC: 1, 2)
-  - [ ] `processDefinition` — list, get, XML, statistics, suspend, delete, restart
-  - [ ] `deployment` — create, list, get, get resources, redeploy, delete, count
-  - [ ] `processInstance` — start, list, get, suspend, resume, delete, variables, activity tree
-  - [ ] `task` — full lifecycle: list, get, claim, unclaim, complete, delegate, resolve, assign, variables, create, update, throw error
-  - [ ] `job` — list, get, trigger, suspend, resume, retries, stack trace
-  - [ ] `incident` — list, get, resolve, count
-  - [ ] `user` — list, get profile, create, update, delete, unlock
-  - [ ] `history` — process instances, activity instances, task instances, variable instances, incidents, job logs, user operations
-  - [ ] `decision` — list, get, get XML, evaluate, list requirements
-- [ ] Add "Out of Scope" section to `README.md` with Growth/Vision feature list (AC: 3, 4)
-- [ ] Verify original 5 sections from Story 1.6 are preserved intact (AC: 5)
+- [x] Expand the "Available Tool Groups" section in `README.md` with all 9 tool groups, per-group descriptions, and operations lists (AC: 1, 2)
+  - [x] `processDefinition` — list, get, XML, statistics, suspend, delete, restart
+  - [x] `deployment` — create, list, get, get resources, redeploy, delete, count
+  - [x] `processInstance` — start, list, get, suspend, resume, delete, variables, activity tree
+  - [x] `task` — full lifecycle: list, get, claim, unclaim, complete, delegate, resolve, assign, variables, create, update, throw error
+  - [x] `job` — list, get, trigger, suspend, resume, retries, stack trace
+  - [x] `incident` — list, get, resolve, count
+  - [x] `user` — list, get profile, create, update, delete, unlock
+  - [x] `history` — process instances, activity instances, task instances, variable instances, incidents, job logs, user operations
+  - [x] `decision` — list, get, get XML, evaluate, list requirements
+- [x] Add "Out of Scope" section to `README.md` with Growth/Vision feature list (AC: 3, 4)
+- [x] Verify original 5 sections from Story 1.6 are preserved intact (AC: 5)
 
 ## Dev Notes
 
@@ -130,8 +130,25 @@ Before writing the operations list for each group, check `config/tool-manifest.j
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
+
+- Cross-referenced `config/tool-manifest.json` to verify actual exposed operations per group before writing descriptions.
+- Noted that `deployment_create` is a custom hand-written tool in `src/tools/deployment.ts` (not in the generated manifest) but IS exposed as `deployment_create` MCP tool.
 
 ### Completion Notes List
 
+- Expanded `README.md` "Available Tool Groups" section with detailed per-group entries for all 11 exposed groups (9 required + jobDefinition + group) including descriptions and operation bullet lists (AC 1, 2).
+- All 9 required groups (processDefinition, deployment, processInstance, task, job, incident, user, history, decision) have detailed operation lists cross-referenced with `config/tool-manifest.json` (AC 2).
+- Added "Out of Scope" section after "Available Tool Groups" with 5 out-of-scope items referencing Growth and Vision phases (AC 3, 4).
+- All original sections (Install & Run, Environment Variables, MCP Client Configuration, Example Prompts, Development, Project Structure) preserved unchanged (AC 5).
+- All 44 unit tests pass.
+
 ### File List
+
+- `README.md` (modified — Available Tool Groups section expanded, Out of Scope section added)
+
+## Change Log
+
+- 2026-03-18: Implemented Story 9.7 — expanded README with detailed per-group tool documentation and added Out of Scope section.

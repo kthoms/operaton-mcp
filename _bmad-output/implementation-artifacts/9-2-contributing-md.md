@@ -1,6 +1,6 @@
 # Story 9.2: CONTRIBUTING.md
 
-Status: draft
+Status: review
 
 ## Story
 
@@ -43,12 +43,12 @@ so that I can contribute without needing to ask questions or reverse-engineer th
 
 ## Tasks / Subtasks
 
-- [ ] Create `CONTRIBUTING.md` with Operaton license header in HTML comment block at top (AC: 1)
-- [ ] Add contributor workflow section: fork → clone → install → build → test → PR (AC: 5)
-- [ ] Add conventional commits section with scope table (AC: 2)
-- [ ] Add 4+ commit message examples with real scope values (AC: 3)
-- [ ] Add link to conventionalcommits.org spec (AC: 4)
-- [ ] Add development section: test commands, `OPERATON_SKIP_HEALTH_CHECK`, `npm run generate` (AC: 6)
+- [x] Create `CONTRIBUTING.md` with Operaton license header in HTML comment block at top (AC: 1)
+- [x] Add contributor workflow section: fork → clone → install → build → test → PR (AC: 5)
+- [x] Add conventional commits section with scope table (AC: 2)
+- [x] Add 4+ commit message examples with real scope values (AC: 3)
+- [x] Add link to conventionalcommits.org spec (AC: 4)
+- [x] Add development section: test commands, `OPERATON_SKIP_HEALTH_CHECK`, `npm run generate` (AC: 6)
 
 ## Dev Notes
 
@@ -107,8 +107,27 @@ Recommended section order:
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
+
+None.
 
 ### Completion Notes List
 
+- Created `CONTRIBUTING.md` at project root with all required sections.
+- License header present as HTML comment block at top of file (AC 1).
+- Contributor workflow covers fork → clone → npm install → npm run build → npm test → open PR in that order (AC 5).
+- Development section documents `npm test`, `npm run test:integration`, `OPERATON_SKIP_HEALTH_CHECK=true`, and `npm run generate` (AC 6).
+- Commit conventions section includes full scope table with all 12 required scopes (AC 2).
+- 4 concrete examples covering feat, fix, chore, docs types with real scope values (AC 3).
+- Link to https://www.conventionalcommits.org/ in commit conventions section (AC 4).
+- Also documented `add:license` / `check:license` scripts in the license headers section.
+
 ### File List
+
+- `CONTRIBUTING.md` (new)
+
+## Change Log
+
+- 2026-03-18: Implemented Story 9.2 — created CONTRIBUTING.md with license header, contributor workflow, development guide, and commit conventions.

@@ -18,7 +18,7 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "prepare": "npm run generate && tsc && tsc-alias",
@@ -29,13 +29,18 @@
     "test:unit": "vitest run test/unit",
     "test:smoke": "vitest run test/smoke",
     "test:integration": "vitest run test/integration",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:license": "node --import tsx/esm scripts/check-license.ts",
+    "add:license": "node --import tsx/esm scripts/add-license.ts",
+    "check:commits": "commitlint --from HEAD~1 --to HEAD"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
     "@types/node": "^22.0.0",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.19.0",
